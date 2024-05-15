@@ -1,0 +1,16 @@
+﻿@model Electric_Scooter.Models.Customer
+
+<main class="container-wrap">
+    <div class="container-main">
+        <!-- breadcrumb -->
+        <section class="breadcrumb-wrap">
+            <ul>
+                <li><a href="@Url.Action("Index")">首頁</a></li>
+                <li><a href="@Url.Action("Index")">客戶資料管理</a></li>
+                <li><p>詳細資料</p></li>
+            </ul>
+        </section>
+        <!-- main -->
+        @Html.Partial("Form",Model,new ViewDataDictionary { { "IsView",true} })
+    </div>
+</main>

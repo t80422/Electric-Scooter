@@ -1,0 +1,27 @@
+﻿@model Electric_Scooter.Models.Customer
+
+<main class="container-wrap">
+    <div class="container-main">
+        <!-- breadcrumb -->
+        <section class="breadcrumb-wrap">
+            <ul>
+                <li>
+                    <a href="">首頁</a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index")">客戶資料管理</a>
+                </li>
+                <li>
+                    <p>修改</p>
+                </li>
+            </ul>
+        </section>
+        <!-- main -->
+        @using (Html.BeginForm("Edit", "Customer", FormMethod.Post))
+        {
+            @Html.HiddenFor(x => x.c_Id)
+            @Html.HiddenFor(x=>x.c_CreateDate)
+            @Html.Partial("Form", Model)
+        }
+    </div>
+</main>

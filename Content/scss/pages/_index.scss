@@ -1,0 +1,48 @@
+// slider
+.index-slider-wrap {}
+
+.index-slider-main {
+    position: relative;
+
+    .swiper-slide {
+        figure {
+            height: 600px;
+            background-repeat: no-repeat;
+            background-position: 50% 50%;
+        }
+    }
+
+    .swiper-button-prev,
+    .swiper-button-next {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+        color: #FFF;
+        background-color: rgba(0, 0, 0, 0.7);
+
+        &::before {
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+        }
+
+        &::after {
+            display: none;
+        }
+    }
+
+    .swiper-button-prev {
+        left: 0;
+
+        &::before {
+            content: '\f104';
+        }
+    }
+
+    .swiper-button-next {
+        right: 0;
+
+        &::before {
+            content: '\f105';
+        }
+    }
+}

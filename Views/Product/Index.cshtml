@@ -1,0 +1,134 @@
+﻿@model IEnumerable<Electric_Scooter.Models.Product>
+@using Electric_Scooter.Helpers
+@{
+    string GetSortableLink(string linkText, string sortField)
+    {
+        var sortOrder = ViewBag.SortField == sortField && ViewBag.SortOrder == "asc" ? "desc" : "asc";
+        return Url.Action("Index", new
+        {
+            sortField = sortField,
+            sortOrder = sortOrder,
+            searchTerm = Request.QueryString["searchTerm"],
+            city = Request.QueryString["city"]
+        });
+    }
+}
+<main class="container-wrap">
+    <div class="container-main">
+        <!-- breadcrumb -->
+        <section class="breadcrumb-wrap">
+            <ul>
+                <li>
+                    <a href="">首頁</a>
+                </li>
+                <li>
+                    <p>商品管理</p>
+                </li>
+            </ul>
+        </section>
+        <!-- tool -->
+        @using (Html.BeginForm("Index", "Product", FormMethod.Get))
+        {
+            <section class="tool-wrap">
+                <div class="tool-flex">
+                    <div class="filter-select">
+                        <label>分類</label>
+                        <select name="type">
+                            <option value="">請選擇</option>
+                            <option value="車輛A01" @(Request.QueryString["type"] == "車輛A01" ? "selected" : "")>車輛A01</option>
+                            <option value="電池B01" @(Request.QueryString["type"] == "電池B01" ? "selected" : "")>電池B01</option>
+                            <option value="零件C01" @(Request.QueryString["type"] == "零件C01" ? "selected" : "")>零件C01</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-price">
+                        <label>價格範圍</label>
+                        <div>
+                            <input type="number" name="minPrice" value="@Request.QueryString["minPrice"]" placeholder="最小價格" />
+                        </div>
+                        <span></span>
+                        <div>
+                            <input type="number" name="maxPrice" value="@Request.QueryString["maxPrice"]" placeholder="最大價格" />
+                        </div>
+                    </div>
+
+                    <div class="filter-bottom">
+                        <button type="submit" class="btn-filter-submit">確定</button>
+                        <a href="@Url.Action("Index")" class="btn-filter-clean">清除條件</a>
+                    </div>
+
+                    <div class="tool-search">
+                        <div class="ts-box">
+                            <input type="text" name="searchTerm" placeholder="請輸入關鍵字搜尋" value="@Request.QueryString["searchTerm"]">
+                            <button type="submit" class="btn-search"></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tool-btn">
+                    <button type="button" class="btn-add" onclick="location='@Url.Action("Create")'"><span>新增一筆</span></button>
+                    <button type="button" class="btn-export" onclick="print('@Url.Action("Print")')"><span>列印</span></button>
+                    <button type="button" class="btn-export" onclick="location='@Url.Action("ExportToPDF")'"><span>匯出</span></button>
+                </div>
+            </section>
+        }
+        <!-- list -->
+        <section class="list-wrap">
+            <div class="list-overflow">
+                <div class="list-main">
+                    <div class="list-title">
+                        <div class="f-0">
+                            <input type="checkbox" id="checkAll">
+                        </div>
+                        <div class="f-1">編號</div>
+                        <div class="f-1">
+                            <a href="@GetSortableLink("分類","Type")">分類</a>
+                        </div>
+                        <div class="f-1">名稱</div>
+                        <div class="f-1">型號</div>
+                        <div class="f-1">車架編號</div>
+                        <div class="f-1">
+                            <a href="@GetSortableLink("售價","Price")">售價</a>
+                        </div>
+                        <div class="f-1">
+                            <a href="@GetSortableLink("供應商","Supplier")">供應商</a>
+                        </div>
+                        <div class="f-1">操作</div>
+                    </div>
+
+                    <div class="list-list">
+                        @foreach (var product in Model)
+                        {
+                            <div class="list-row" onclick="location.href='@Url.Action("Details", "Product", new { id = product.p_Id })'" style="cursor: pointer;">
+                                <div class="f-0">
+                                    <input type="checkbox" class="list-checkbox" onclick="event.stopPropagation();" />
+                                </div>
+                                <div class="f-1">@product.p_Id</div>
+                                <div class="f-1">@product.p_Type</div>
+                                <div class="f-1">@product.p_Name</div>
+                                <div class="f-1">@product.p_Model</div>
+                                <div class="f-1">@product.p_CarFrameNo</div>
+                                <div class="f-1">@product.p_Price</div>
+                                <div class="f-1">@(product.Supplier?.s_Name)</div>
+                                <div class="f-1" onclick="event.stopPropagation();">
+                                    @Html.ActionLink(" ", "Edit", new { id = product.p_Id }, new { @class = "fa-solid fa-pen-to-square", style = "margin-right: 10px;", title = "修改" })
+
+                                    <form action="@Url.Action("Delete", "Product", new { id = product.p_Id})" method="post" style="display: inline;">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="fa-solid fa-trash" onclick="return confirm('確定要刪除這個項目嗎？')" style="border: none; background: none;" title="修改"></button>
+                                    </form>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- pages -->
+        <div class="pages-wrap">
+            <button class="btn-prev"></button>
+            <button class="btn-next"></button>
+            <span>showing @Model.Count() of @Model.Count()</span>
+        </div>
+    </div>
+</main>

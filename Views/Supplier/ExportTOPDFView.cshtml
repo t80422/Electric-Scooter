@@ -1,0 +1,152 @@
+﻿@model IEnumerable<Electric_Scooter.Models.Supplier>
+@{
+    Layout = null;
+}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supplier List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed; /* 防止超出頁面 */
+            margin-bottom: 20px;
+            font-size: 10px;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 6px;
+            text-align: left;
+            word-wrap: break-word; /* 防止文字超出表格 */
+        }
+
+        th {
+            font-size: 10px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 8px;
+        }
+
+        .col-id {
+            width: 15px;
+        }
+
+        .col-name {
+            width: 20px;
+        }
+
+        .col-phone {
+            width: 25px;
+        }
+
+        .col-phoneType {
+            width: 15px;
+        }
+
+        .col-email {
+            width: 30px;
+        }
+
+        .col-lineId {
+            width: 30px;
+        }
+
+        .col-city {
+            width: 17px;
+        }
+
+        .col-postalcode {
+            width: 16px;
+        }
+
+        .col-address {
+            width: 30px;
+        }
+
+        .col-memo {
+            width: 30px;
+        }
+
+        .col-state {
+            width: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h3>供應商列表</h3>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th class="col-id">編號</th>
+                <th class="col-name">名稱</th>
+                <th class="col-name">負責人</th>
+                <th class="col-phone">電話1</th>
+                <th class="col-phoneType">電話1類型</th>
+                <th class="col-phone">電話2</th>
+                <th class="col-phoneType">電話2類型</th>
+                <th class="col-phone">電話3</th>
+                <th class="col-phoneType">電話3類型</th>
+                <th class="col-email">信箱</th>
+                <th class="col-lineId">Line ID</th>
+                <th class="col-city">縣市</th>
+                <th class="col-postalcode">郵遞區號</th>
+                <th class="col-address">地址</th>
+                <th class="col-name">業務負責人</th>
+                <th class="col-phone">業務電話1</th>
+                <th class="col-phoneType">業務電話1類型</th>
+                <th class="col-phone">業務電話2</th>
+                <th class="col-phoneType">業務電話2類型</th>
+                <th class="col-memo">備註</th>
+                <th class="col-state">狀態</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var supplier in Model)
+            {
+                <tr>
+                    <th class="col-id">@supplier.s_Id</th>
+                    <th class="col-name">@supplier.s_Name</th>
+                    <th class="col-name">@supplier.s_InchargePerson</th>
+                    <th class="col-phone">@supplier.s_Phone1</th>
+                    <th class="col-phoneType">@supplier.s_Phone1Type</th>
+                    <th class="col-phone">@supplier.s_Phone2</th>
+                    <th class="col-phoneType">@supplier.s_Phone2Type</th>
+                    <th class="col-phone">@supplier.s_Phone3</th>
+                    <th class="col-phoneType">@supplier.s_Phone3Type</th>
+                    <th class="col-email">@supplier.s_Email</th>
+                    <th class="col-lineId">@supplier.s_LineId</th>
+                    <th class="col-city">@supplier.s_City</th>
+                    <th class="col-postalcode">@supplier.s_PostalCode</th>
+                    <th class="col-address">@supplier.s_Address</th>
+                    <th class="col-name">@supplier.s_Sales</th>
+                    <th class="col-phone">@supplier.s_SalesPhone1</th>
+                    <th class="col-phoneType">@supplier.s_SalesPhone1Type</th>
+                    <th class="col-phone">@supplier.s_SalesPhone2</th>
+                    <th class="col-phoneType">@supplier.s_SalesPhone2Type</th>
+                    <th class="col-memo">@supplier.s_Memo</th>
+                    <th class="col-state">@(supplier.s_State?"開啟":"停用")</th>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="footer">
+        <p>Generated on @DateTime.Now</p>
+    </div>
+</body>
+</html>

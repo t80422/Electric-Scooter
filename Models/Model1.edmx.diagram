@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a6dd085cf2264374a1aa2e6b54ab9508" Name="Diagram1">
+        <EntityTypeShape EntityType="I_ChiModel.Customer" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="I_ChiModel.OrderDetail" Width="1.5" PointX="5.25" PointY="2.375" />
+        <EntityTypeShape EntityType="I_ChiModel.Orders" Width="1.5" PointX="3" PointY="10" />
+        <EntityTypeShape EntityType="I_ChiModel.Points" Width="1.5" PointX="3" PointY="13.875" />
+        <EntityTypeShape EntityType="I_ChiModel.Product" Width="1.5" PointX="3" PointY="2.75" />
+        <EntityTypeShape EntityType="I_ChiModel.Purchase" Width="1.5" PointX="5.25" PointY="5.75" />
+        <EntityTypeShape EntityType="I_ChiModel.Supplier" Width="1.5" PointX="0.75" PointY="1.875" />
+        <EntityTypeShape EntityType="I_ChiModel.Users" Width="1.5" PointX="3" PointY="16.75" />
+        <AssociationConnector Association="I_ChiModel.FK_Orders_Customer" />
+        <AssociationConnector Association="I_ChiModel.FK_Points_Customer" />
+        <AssociationConnector Association="I_ChiModel.FK_Users_Customer" />
+        <AssociationConnector Association="I_ChiModel.FK_OrderDetail_Orders" />
+        <AssociationConnector Association="I_ChiModel.FK_OrderDetail_Product" />
+        <AssociationConnector Association="I_ChiModel.FK_Product_Supplier" />
+        <AssociationConnector Association="I_ChiModel.FK_Purchase_Product" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

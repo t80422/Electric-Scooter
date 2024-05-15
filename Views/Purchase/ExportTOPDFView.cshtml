@@ -1,0 +1,124 @@
+﻿@model IEnumerable<Electric_Scooter.Models.Purchase>
+@{
+    Layout = null;
+}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed; /* 防止超出頁面 */
+            margin-bottom: 20px;
+            font-size: 10px;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 6px;
+            text-align: left;
+            word-wrap: break-word; /* 防止文字超出表格 */
+        }
+
+        th {
+            font-size: 10px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 8px;
+        }
+
+        .col-type {
+            width: 20px;
+        }
+
+        .col-name {
+            width: 20px;
+        }
+
+        .col-model {
+            width: 20px;
+        }
+
+        .col-color {
+            width: 20px;
+        }
+
+        .col-motor {
+            width: 20px;
+        }
+
+        .col-carFrame {
+            width: 20px;
+        }
+
+        .col-price {
+            width: 20px;
+        }
+
+        .col-supplier {
+            width: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h3>進貨列表</h3>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th class="col-name">廠商名稱</th>
+                <th class="col-name">分類</th>
+                <th class="col-name">商品名稱</th>
+                <th class="col-name">數量</th>
+                <th class="col-name">價格</th>
+                <th class="col-name">入庫日期</th>
+                <th class="col-name">出庫日期</th>
+                <th class="col-name">有無驗車</th>
+                <th class="col-name">有無廠證</th>
+                <th class="col-name">良品/不良品</th>
+                <th class="col-name">結清</th>
+                <th class="col-name">收款</th>
+                <th class="col-name">分期</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th class="col-name">@item.Product.Supplier.s_Name</th>
+                    <th class="col-name">@item.Product.p_Type</th>
+                    <th class="col-name">@item.Product.p_Name</th>
+                    <th class="col-name">@item.pu_Quantity</th>
+                    <th class="col-name">@item.pu_Price</th>
+                    <th class="col-name">@(item.pu_StockInDate?.ToString("yyyy-MM-dd"))</th>
+                    <th class="col-name">@(item.pu_StockOutDate?.ToString("yyyy-MM-dd"))</th>
+                    <th class="col-name">@(item.pu_IsVehicleInspected.HasValue? (item.pu_IsVehicleInspected.Value ? "是":"否"):"")</th>
+                    <th class="col-name">@(item.pu_HasFactoryCertificate.HasValue? (item.pu_HasFactoryCertificate.Value ? "是":"否"):"")</th>
+                    <th class="col-name">@(item.pu_IsQuality.HasValue? (item.pu_IsQuality.Value ? "是":"否"):"")</th>
+                    <th class="col-name">@(item.pu_IsSettled.HasValue? (item.pu_IsSettled.Value ? "是":"否"):"")</th>
+                    <th class="col-name">@(item.pu_IsPaymentReceived.HasValue? (item.pu_IsPaymentReceived.Value ? "是":"否"):"")</th>
+                    <th class="col-name">@(item.pu_IsInstallment.HasValue? (item.pu_IsInstallment.Value ? "是":"否"):"")</th>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="footer">
+        <p>Generated on @DateTime.Now</p>
+    </div>
+</body>
+</html>

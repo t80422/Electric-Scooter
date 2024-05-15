@@ -1,0 +1,191 @@
+﻿@model IEnumerable<Electric_Scooter.Models.Customer>
+@{
+    Layout = null;
+}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed; /* 防止超出頁面 */
+            margin-bottom: 20px;
+            font-size: 10px;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 6px;
+            text-align: left;
+            word-wrap: break-word; /* 防止文字超出表格 */
+        }
+
+        th {
+            font-size: 10px;
+            background-color: #f2f2f2; /* Optional: 增加背景色 */
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 8px;
+        }
+
+        .col-id {
+            width: 15px;
+        }
+
+        .col-name {
+            width: 20px;
+        }
+
+        .col-gender {
+            width: 17px;
+        }
+
+        .col-birthday {
+            width: 28px;
+        }
+
+        .col-idcard {
+            width: 29px;
+        }
+
+        .col-lineid {
+            width: 30px;
+        }
+
+        .col-email {
+            width: 30px;
+        }
+
+        .col-nationality {
+            width: 15px;
+        }
+
+        .col-postalcode {
+            width: 16px;
+        }
+
+        .col-city {
+            width: 17px;
+        }
+
+        .col-address {
+            width: 30px;
+        }
+
+        .col-createdate {
+            width: 28px;
+        }
+
+        .col-memo {
+            width: 30px;
+        }
+
+        .col-taxid {
+            width: 27px;
+        }
+
+        .col-company {
+            width: 25px;
+        }
+
+        .col-phone1 {
+            width: 25px;
+        }
+
+        .col-phone1type {
+            width: 15px;
+        }
+
+        .col-phone2 {
+            width: 25px;
+        }
+
+        .col-phone2type {
+            width: 15px;
+        }
+
+        .col-phone3 {
+            width: 25px;
+        }
+
+        .col-phone3type {
+            width: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h3>Customer List</h3>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th class="col-id">編號</th>
+                <th class="col-name">姓名</th>
+                <th class="col-gender">性別</th>
+                <th class="col-birthday">生日</th>
+                <th class="col-idcard">身分證字號</th>
+                <th class="col-lineid">LINE ID</th>
+                <th class="col-email">信箱</th>
+                <th class="col-nationality">國籍</th>
+                <th class="col-postalcode">郵遞區號</th>
+                <th class="col-city">縣市</th>
+                <th class="col-address">住址</th>
+                <th class="col-createdate">建立日期</th>
+                <th class="col-memo">備註</th>
+                <th class="col-taxid">統編</th>
+                <th class="col-company">公司</th>
+                <th class="col-phone1">電話1</th>
+                <th class="col-phone1type">電話1類型</th>
+                <th class="col-phone2">電話2</th>
+                <th class="col-phone2type">電話2類型</th>
+                <th class="col-phone3">電話3</th>
+                <th class="col-phone3type">電話3類型</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cus in Model)
+            {
+                <tr>
+                    <td class="col-id">@cus.c_Id</td>
+                    <td class="col-name">@cus.c_Name</td>
+                    <td class="col-gender">@((cus.c_Gender ?? false) ? "生理男" : "生理女")</td>
+                    <td class="col-birthday">@(cus.c_Birthday?.ToString("yyyy/MM/dd"))</td>
+                    <td class="col-idcard">@cus.c_IdCard</td>
+                    <td class="col-lineid">@cus.c_LineId</td>
+                    <td class="col-email">@cus.c_EMail</td>
+                    <td class="col-nationality">@cus.c_Nationality</td>
+                    <td class="col-postalcode">@cus.c_PostalCode</td>
+                    <td class="col-city">@cus.c_City</td>
+                    <td class="col-address">@cus.c_Address</td>
+                    <td class="col-createdate">@(cus.c_CreateDate?.ToString("yyyy/MM/dd"))</td>
+                    <td class="col-memo">@cus.c_Memo</td>
+                    <td class="col-taxid">@cus.c_TaxId</td>
+                    <td class="col-company">@cus.c_Company</td>
+                    <td class="col-phone1">@cus.c_Phone1</td>
+                    <td class="col-phone1type">@cus.c_Phone1_Type</td>
+                    <td class="col-phone2">@cus.c_Phone2</td>
+                    <td class="col-phone2type">@cus.c_Phone2_Type</td>
+                    <td class="col-phone3">@cus.c_Phone3</td>
+                    <td class="col-phone3type">@cus.c_Phone3_Type</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="footer">
+        <p>Generated on @DateTime.Now</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,295 @@
+﻿@model Electric_Scooter.Models.Customer
+@using Electric_Scooter.Helpers
+@{
+    var isView = ViewBag.IsView ?? false;// 判斷是詳細資料還是表單
+}
+
+@Html.AntiForgeryToken()
+
+<section class="form-horizontal">
+    <div class="form-group">
+        @Html.LabelFor(x => x.c_Name, "姓名", new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @if (isView)
+            {
+                <p class="form-control-static">@Model.c_Name</p>
+            }
+            else
+            {
+                @Html.EditorFor(x => x.c_Name, new { htmlAttributes = new { @class = "form-control", maxlength = 20 } })
+            }
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.c_Gender, "性別", new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @if (isView)
+            {
+                <p class="form-control-static">@((Model.c_Gender ?? false) ? "生理男" : "生理女")</p>
+            }
+            else
+            {
+                <div class="form-check form-check-inline">
+                    @Html.RadioButtonFor(x => x.c_Gender, true, new { id = "genderMale", @class = "form-check-input" })
+                    @Html.Label("genderMale", "生理男", new { @class = "form-check-label" })
+                </div>
+                <div class="form-check form-check-inline">
+                    @Html.RadioButtonFor(x => x.c_Gender, false, new { id = "genderFemale", @class = "form-check-input" })
+                    @Html.Label("genderFemale", "生理女", new { @class = "form-check-label" })
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.c_Birthday, "生日", new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @if (isView)
+            {
+                <p class="form-control-static">@(Model.c_Birthday?.ToString("yyyy/MM/dd"))</p>
+            }
+            else
+            {
+                @Html.DateInputFor(x => x.c_Birthday, new { @class = "form-control" })
+            }
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.c_IdCard, "身份證字號", new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @if (isView)
+            {
+                <p class="form-control-static">@Model.c_IdCard</p>
+            }
+            else
+            {
+                @Html.EditorFor(x => x.c_IdCard, new { htmlAttributes = new { @class = "form-control", maxlength = 10 } })
+            }
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("電話1", new { @class = "control-label col-md-2" })
+        <div class="col-md-1">
+            @if (isView)
+            {
+                <p class="form-control-static">@Model.c_Phone1_Type</p>
+            }
+            else
+            {
+                @Html.DropDownListFor(x => x.c_Phone1_Type, new SelectList(new[]
+                {
+                    "住家","手機","公司","傳真"
+                }), "請選擇", new { @class = "form-control" })
+            }
+        </div>
+
+        <div class="col-md-5">
+            @if (isView)
+            {
+                <p class="form-control-static">@Model.c_Phone1</p>
+            }
+            else
+            {
+                @Html.EditorFor(x => x.c_Phone1, new { htmlAttributes = new { @class = "form-control", maxlength = 10, oninput = "this.value = this.value.replace(/[^0-9]/g, '')" } })
+            }
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("電話2", new { @class = "control-label col-md-2" })
+        <div class="col-md-1">
+            @if (isView)
+            {
+                <p class="form-control-static">@Model.c_Phone2_Type</p>
+            }
+            else
+            {
+                @Html.DropDownListFor(x => x.c_Phone2_Type, new SelectList(new[]
+                {
+                    "住家","手機","公司","傳真"
+                }), "請選擇", new { @class = "form-control" })
+            }
+        </div>
+
+        <div class="col-md-5">
+            @if (isView)
+            {
+                <p class="form-control-static">@Model.c_Phone2</p>
+            }
+            else
+            {
+                @Html.EditorFor(x => x.c_Phone2, new { htmlAttributes = new { @class = "form-control", maxlength = 10, oninput = "this.value = this.value.replace(/[^0-9]/g, '')", placeholder = "選填" } })
+            }
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("電話3", new { @class = "control-label col-md-2" })
+        <div class="col-md-1">
+            @if (isView)
+            {
+                <p class="form-control-static">@Model.c_Phone3_Type</p>
+            }
+            else
+            {
+                @Html.DropDownListFor(x => x.c_Phone3_Type, new SelectList(new[]
+                {
+                    "住家","手機","公司","傳真"
+                }), "請選擇", new { @class = "form-control" })
+            }
+        </div>
+
+        <div class="col-md-5">
+            @if (isView)
+            {
+                <p class="form-control-static">@Model.c_Phone3</p>
+            }
+            else
+            {
+                @Html.EditorFor(x => x.c_Phone3, new { htmlAttributes = new { @class = "form-control", maxlength = 10, oninput = "this.value = this.value.replace(/[^0-9]/g, '')", placeholder = "選填" } })
+            }
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.c_LineId, "Line ID", new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @if (isView)
+            {
+                <p class="form-control-static">@Model.c_LineId</p>
+            }
+            else
+            {
+                @Html.EditorFor(x => x.c_LineId, new { htmlAttributes = new { @class = "form-control", maxlength = 20 } })
+            }
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.c_EMail, "信箱", new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @if (isView)
+            {
+                <p class="form-control-static">@Model.c_EMail</p>
+            }
+            else
+            {
+                @Html.EditorFor(x => x.c_EMail, new { htmlAttributes = new { @class = "form-control", maxlength = 40 } })
+            }
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.c_Nationality, "國籍", new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @if (isView)
+            {
+                <p class="form-control-static">@Model.c_Nationality</p>
+            }
+            else
+            {
+                @Html.EditorFor(x => x.c_Nationality, new { htmlAttributes = new { @class = "form-control", maxlength = 20 } })
+            }
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.c_City, "縣市", new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @if (isView)
+            {
+                <p class="form-control-static">@Model.c_City</p>
+            }
+            else
+            {
+                @Html.DropDownListFor(x => x.c_City, new SelectList(CityHelper.GetCities()), "請選擇", new { @class = "form-control" })
+            }
+        </div>
+
+        @Html.LabelFor(x => x.c_PostalCode, "郵遞區號", new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @if (isView)
+            {
+                <p class="form-control-static">@Model.c_PostalCode</p>
+            }
+            else
+            {
+                @Html.EditorFor(x => x.c_PostalCode, new { htmlAttributes = new { @class = "form-control", maxlength = 5, oninput = "this.value = this.value.replace(/[^0-9]/g, '')" } })
+            }
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.c_Address, "地址", new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @if (isView)
+            {
+                <p class="form-control-static">@Model.c_Address</p>
+            }
+            else
+            {
+                @Html.EditorFor(x => x.c_Address, new { htmlAttributes = new { @class = "form-control", maxlength = 40 } })
+            }
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.c_TaxId, "統編", new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @if (isView)
+            {
+                <p class="form-control-static">@Model.c_TaxId</p>
+            }
+            else
+            {
+                @Html.EditorFor(x => x.c_TaxId, new { htmlAttributes = new { @class = "form-control", maxlength = 8, oninput = "this.value = this.value.replace(/[^0-9]/g, '')" } })
+            }
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.c_Company, "公司", new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @if (isView)
+            {
+                <p class="form-control-static">@Model.c_Company</p>
+            }
+            else
+            {
+                @Html.EditorFor(x => x.c_Company, new { htmlAttributes = new { @class = "form-control", maxlength = 20 } })
+            }
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.c_Memo, "備註", new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @if (isView)
+            {
+                <p class="form-control-static">@Model.c_Memo</p>
+            }
+            else
+            {
+                @Html.EditorFor(x => x.c_Memo, new { htmlAttributes = new { @class = "form-control", maxlength = 40 } })
+            }
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            @if (isView)
+            {
+                @Html.ActionLink("編輯", "Edit", new { id = Model.c_Id }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("返回列表", "Index", "Customer", new { @class = "btn btn-secondary" })
+            }
+            else
+            {
+                <input type="submit" value="儲存" class="btn btn-primary" />
+                @Html.ActionLink("返回列表", "Index", "Customer", null, new { @class = "btn btn-secondary" })
+            }
+        </div>
+    </div>
+</section>

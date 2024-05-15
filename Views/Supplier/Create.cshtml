@@ -1,0 +1,25 @@
+﻿@model Electric_Scooter.Models.Supplier
+
+<main class="container-wrap">
+    <div class="container-main">
+        <!-- breadcrumb -->
+        <section class="breadcrumb-wrap">
+            <ul>
+                <li>
+                    <a href="">首頁</a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index")">供應商管理</a>
+                </li>
+                <li>
+                    <p>新增</p>
+                </li>
+            </ul>
+        </section>
+        <!-- main -->
+        @using (Html.BeginForm("Create", "Supplier", FormMethod.Post))
+        {
+            @Html.Partial("Form", Model, new ViewDataDictionary { { "IsView", false } })
+        }
+    </div>
+</main>

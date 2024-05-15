@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>愛騏</title>
+    <link href="image/favico.ico" rel="shortcut icon">
+    <script src="https://kit.fontawesome.com/dc64e3707d.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Content/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="~/Content/css/style.css" />
+    <link rel="stylesheet" href="~/Content/css/tempStyle.css" />
+
+    <script src="~/Scripts/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/default/easyui.css">
+</head>
+<body>
+    <article id="wrap" class="aside-toggle">
+        <!-- aside -->
+        <aside class="aside-wrap">
+            <div class="aside-top">
+                <figure class="logo-wrap">
+                    <a href="index.html"></a>
+                </figure>
+                <button class="nav-btn"></button>
+            </div>
+            <div class="aside-title">
+                <h2>基本功能</h2>
+            </div>
+            <div class="aside-main">
+                <nav class="nav-wrap">
+                    <ul class="nav-list">
+                        <li class="nav-item nav-member">
+                            <div class="nav-box">
+                                <a href="@Url.Action("Index","Customer")">客戶資料管理</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <div class="nav-box">
+                                <a href="@Url.Action("Index","Supplier")">供應商管理</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <div class="nav-box">
+                                <a href="@Url.Action("Index","Product")">商品管理</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <div class="nav-box">
+                                <a href="@Url.Action("Index","Purchase")">進貨系統</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <div class="nav-box">
+                                <a href="@Url.Action("Index","Order")">銷貨系統</a>
+                            </div>
+                        </li>
+                        <li class="nav-item nav-revenue">
+                            <div class="nav-box">
+                                <button><span>營收分析</span></button>
+                                <div class="nav-sub">
+                                    <ul>
+                                        <li><a href="">連結一</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item nav-statistic">
+                            <div class="nav-box">
+                                <button><span>統計報表</span></button>
+                                <div class="nav-sub">
+                                    <ul>
+                                        <li><a href="">連結一</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <div class="nav-box">
+                                <a href="##"><span>實體店面管理</span></a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+        <!-- header -->
+        <header class="header-wrap">
+            <section class="header-main">
+                <button class="header-nav"></button>
+                <div class="header-search">
+                    <input type="text" placeholder="請輸入關鍵字搜尋">
+                    <button class="btn-search"></button>
+                </div>
+                <div class="user">
+                    <div class="user-data"><a href="##">個人資料</a></div>
+                    <div class="user-set"><a href="##">設定</a></div>
+                    <div class="user-logout"><a href="##">登出</a></div>
+                </div>
+            </section>
+        </header>
+        <!-- main -->
+        @RenderBody()
+    </article>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/script")
+</body>
+</html>

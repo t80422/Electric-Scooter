@@ -1,0 +1,114 @@
+﻿@model IEnumerable<Electric_Scooter.Models.Product>
+@{
+    Layout = null;
+}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed; /* 防止超出頁面 */
+            margin-bottom: 20px;
+            font-size: 10px;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 6px;
+            text-align: left;
+            word-wrap: break-word; /* 防止文字超出表格 */
+        }
+
+        th {
+            font-size: 10px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 8px;
+        }
+
+        .col-type {
+            width: 20px;
+        }
+
+        .col-name {
+            width: 20px;
+        }
+
+        .col-model {
+            width: 20px;
+        }
+
+        .col-color {
+            width: 20px;
+        }
+
+        .col-motor {
+            width: 20px;
+        }
+
+        .col-carFrame {
+            width: 20px;
+        }
+
+        .col-price {
+            width: 20px;
+        }
+
+        .col-supplier {
+            width: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h3>商品列表</h3>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th class="col-type">分類</th>
+                <th class="col-name">名稱</th>
+                <th class="col-model">型號</th>
+                <th class="col-color">顏色</th>
+                <th class="col-motor">馬達編號</th>
+                <th class="col-carFrame">車架編號</th>
+                <th class="col-price">售價</th>
+                <th class="col-supplier">供應商</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th class="col-type">@item.p_Type</th>
+                    <th class="col-name">@item.p_Name</th>
+                    <th class="col-model">@item.p_Model</th>
+                    <th class="col-color">@item.p_Color</th>
+                    <th class="col-motor">@item.p_MotorNo</th>
+                    <th class="col-carFrame">@item.p_CarFrameNo</th>
+                    <th class="col-price">@item.p_Price</th>
+                    <th class="col-supplier">@(item.Supplier?.s_Name)</th>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="footer">
+        <p>Generated on @DateTime.Now</p>
+    </div>
+</body>
+</html>
