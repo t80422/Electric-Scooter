@@ -1,4 +1,4 @@
-﻿@model Electric_Scooter.Models.Product
+﻿@model Electric_Scooter.Models.OrderVM
 
 <main class="container-wrap">
     <div class="container-main">
@@ -9,7 +9,7 @@
                     <a href="">首頁</a>
                 </li>
                 <li>
-                    <a href="@Url.Action("Index")">進貨系統</a>
+                    <a href="@Url.Action("Index")">銷貨系統</a>
                 </li>
                 <li>
                     <p>新增</p>
@@ -17,9 +17,13 @@
             </ul>
         </section>
         <!-- main -->
-        @using (Html.BeginForm("Create", "Purchase", FormMethod.Post))
+        @using (Html.BeginForm("Create", "Order", FormMethod.Post))
         {
-            @Html.Partial("Form", Model, new ViewDataDictionary { { "IsView", false } })
+            @Html.AntiForgeryToken()
+
+            <section class="form-horizontal">
+                @Html.Partial("Form", Model, new ViewDataDictionary { { "IsView", false } })
+            </section>
         }
     </div>
 </main>

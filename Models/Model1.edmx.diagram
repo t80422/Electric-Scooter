@@ -7,7 +7,7 @@
       <Diagram DiagramId="a6dd085cf2264374a1aa2e6b54ab9508" Name="Diagram1">
         <EntityTypeShape EntityType="I_ChiModel.Customer" Width="1.5" PointX="0.75" PointY="8.75" />
         <EntityTypeShape EntityType="I_ChiModel.OrderDetail" Width="1.5" PointX="5.25" PointY="2.375" />
-        <EntityTypeShape EntityType="I_ChiModel.Orders" Width="1.5" PointX="3" PointY="10" />
+        <EntityTypeShape EntityType="I_ChiModel.Orders" Width="1.5" PointX="3" PointY="9.875" />
         <EntityTypeShape EntityType="I_ChiModel.Points" Width="1.5" PointX="3" PointY="13.875" />
         <EntityTypeShape EntityType="I_ChiModel.Product" Width="1.5" PointX="3" PointY="2.75" />
         <EntityTypeShape EntityType="I_ChiModel.Purchase" Width="1.5" PointX="5.25" PointY="5.75" />

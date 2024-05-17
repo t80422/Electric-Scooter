@@ -1,4 +1,4 @@
-﻿@model Electric_Scooter.Models.Purchase
+﻿@model Electric_Scooter.Models.OrderVM
 
 <main class="container-wrap">
     <div class="container-main">
@@ -6,11 +6,13 @@
         <section class="breadcrumb-wrap">
             <ul>
                 <li><a href="@Url.Action("Index")">首頁</a></li>
-                <li><a href="@Url.Action("Index")">進貨系統</a></li>
+                <li><a href="@Url.Action("Index")">銷貨系統</a></li>
                 <li><p>詳細資料</p></li>
             </ul>
         </section>
         <!-- main -->
-        @Html.Partial("Form", Model, new ViewDataDictionary { { "IsView", true } })
+        <section class="form-horizontal">
+            @Html.Partial("Form", Model, new ViewDataDictionary { { "IsView", true } })
+        </section>
     </div>
 </main>

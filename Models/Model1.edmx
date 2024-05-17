@@ -46,7 +46,7 @@
             <PropertyRef Name="o_Id" />
           </Key>
           <Property Name="o_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="o_No" Type="int" />
+          <Property Name="o_No" Type="nvarchar" MaxLength="11" />
           <Property Name="o_Date" Type="datetime" />
           <Property Name="o_c_Id" Type="int" />
           <Property Name="o_State" Type="nvarchar" MaxLength="50" />
@@ -54,6 +54,7 @@
           <Property Name="o_IsSettled" Type="bit" />
           <Property Name="o_IsCollectPayment" Type="bit" />
           <Property Name="o_IsInstallment" Type="bit" />
+          <Property Name="o_CreateDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Points">
           <Key>
@@ -137,7 +138,9 @@
           <Property Name="a_c_Id" Type="int" />
         </EntityType>
         <Association Name="FK_OrderDetail_Orders">
-          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Orders">
@@ -346,7 +349,7 @@
             <PropertyRef Name="o_Id" />
           </Key>
           <Property Name="o_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="o_No" Type="Int32" />
+          <Property Name="o_No" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
           <Property Name="o_Date" Type="DateTime" Precision="3" />
           <Property Name="o_c_Id" Type="Int32" />
           <Property Name="o_State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -354,6 +357,7 @@
           <Property Name="o_IsSettled" Type="Boolean" />
           <Property Name="o_IsCollectPayment" Type="Boolean" />
           <Property Name="o_IsInstallment" Type="Boolean" />
+          <Property Name="o_CreateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Customer" Relationship="I_ChiModel.FK_Orders_Customer" FromRole="Orders" ToRole="Customer" />
           <NavigationProperty Name="OrderDetail" Relationship="I_ChiModel.FK_OrderDetail_Orders" FromRole="Orders" ToRole="OrderDetail" />
         </EntityType>
@@ -482,7 +486,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_OrderDetail_Orders">
-          <End Type="I_ChiModel.Orders" Role="Orders" Multiplicity="0..1" />
+          <End Type="I_ChiModel.Orders" Role="Orders" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="I_ChiModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Orders">
@@ -576,6 +582,7 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="I_ChiModel.Orders">
               <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="o_CreateDate" ColumnName="o_CreateDate" />
                 <ScalarProperty Name="o_IsInstallment" ColumnName="o_IsInstallment" />
                 <ScalarProperty Name="o_IsCollectPayment" ColumnName="o_IsCollectPayment" />
                 <ScalarProperty Name="o_IsSettled" ColumnName="o_IsSettled" />

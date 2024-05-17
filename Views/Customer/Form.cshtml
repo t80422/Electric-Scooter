@@ -16,7 +16,7 @@
             }
             else
             {
-                @Html.EditorFor(x => x.c_Name, new { htmlAttributes = new { @class = "form-control", maxlength = 20 } })
+                @Html.EditorFor(x => x.c_Name, new { htmlAttributes = new { @class = "form-control", maxlength = 20, required = "required" } })
             }
         </div>
     </div>
@@ -82,7 +82,7 @@
                 @Html.DropDownListFor(x => x.c_Phone1_Type, new SelectList(new[]
                 {
                     "住家","手機","公司","傳真"
-                }), "請選擇", new { @class = "form-control" })
+                }), "請選擇", new { @class = "form-control", required = "required" })
             }
         </div>
 
@@ -93,7 +93,7 @@
             }
             else
             {
-                @Html.EditorFor(x => x.c_Phone1, new { htmlAttributes = new { @class = "form-control", maxlength = 10, oninput = "this.value = this.value.replace(/[^0-9]/g, '')" } })
+                @Html.EditorFor(x => x.c_Phone1, new { htmlAttributes = new { @class = "form-control", maxlength = 10, oninput = "this.value = this.value.replace(/[^0-9]/g, '')", required = "required" } })
             }
         </div>
     </div>

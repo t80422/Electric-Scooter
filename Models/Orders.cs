@@ -21,7 +21,7 @@ namespace Electric_Scooter.Models
         }
     
         public int o_Id { get; set; }
-        public Nullable<int> o_No { get; set; }
+        public string o_No { get; set; }
         public Nullable<System.DateTime> o_Date { get; set; }
         public Nullable<int> o_c_Id { get; set; }
         public string o_State { get; set; }
@@ -29,6 +29,7 @@ namespace Electric_Scooter.Models
         public Nullable<bool> o_IsSettled { get; set; }
         public Nullable<bool> o_IsCollectPayment { get; set; }
         public Nullable<bool> o_IsInstallment { get; set; }
+        public Nullable<System.DateTime> o_CreateDate { get; set; }
     
         public virtual Customer Customer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

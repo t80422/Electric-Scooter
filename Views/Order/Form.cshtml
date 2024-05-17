@@ -1,312 +1,444 @@
-﻿@model Electric_Scooter.Models.Purchase
+﻿@model Electric_Scooter.Models.OrderVM
 @using Electric_Scooter.Helpers
 @{
     var isView = ViewBag.IsView ?? false; // 判斷是詳細資料還是表單
+    var itemIndex = 0;
 }
 
-@Html.AntiForgeryToken()
+<div class="form-group">
+    @Html.LabelFor(x => x.Orders.o_No, "訂單編號", new { @class = "control-label col-md-2" })
+    <div class="col-md-6">
+        @if (isView)
+        {
+            <p class="form-control-static">@Model.Orders.o_No</p>
+        }
+        else
+        {
+            @Html.EditorFor(x => x.Orders.o_No, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+        }
+    </div>
+</div>
 
-<section class="form-horizontal">
-    <!-- 廠商名稱 -->
-    <div class="form-group">
-        @Html.LabelFor(x => x.pu_p_Id, "廠商名稱", new { @class = "control-label col-md-2" })
-        <div class="col-md-6">
-            @if (isView)
-            {
-                <p class="form-control-static">@Model.Product.Supplier.s_Name</p>
-            }
-            else
-            {
-                <input type="text" id="supplierCombobox" class="easyui-combobox" />
-            }
-        </div>
+<div class="form-group">
+    @Html.LabelFor(x => x.Orders.o_Date, "日期", new { @class = "control-label col-md-2" })
+    <div class="col-md-6">
+        @if (isView)
+        {
+            <p class="form-control-static">@(Model.Orders.o_Date?.ToString("yyyy-MM-dd"))</p>
+        }
+        else
+        {
+            @Html.DateInputFor(x => x.Orders.o_Date, new { @class = "form-control", required = "required"})
+        }
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(x => x.Orders.o_c_Id, "客戶", new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @if (isView)
+        {
+            <p class="form-control-static">@Model.Orders.Customer.c_Name</p>
+        }
+        else
+        {
+            @Html.TextBoxFor(x => x.Orders.o_c_Id, new { @class = "easyui-combobox", id = "customer", required = "required" })
+        }
     </div>
 
-    <!-- 分類 -->
-    <div class="form-group">
-        @Html.LabelFor(x => x.Product.p_Type, "分類", new { @class = "control-label col-md-2" })
-        <div class="col-md-6">
-            @if (isView)
-            {
-                <p class="form-control-static">@Model.Product.p_Type</p>
-            }
-            else
-            {
-                <select id="categoryDropdown" class="form-control">
-                    <option value="">請選擇</option>
-                    <option value="車輛A01">車輛A01</option>
-                    <option value="電池B01">電池B01</option>
-                    <option value="零件C01">零件C01</option>
-                </select>
-            }
-        </div>
+    @Html.Label("電話", new { @class = "control-label col-md-1" })
+    <div class="col-md-2">
+        @if (isView)
+        {
+            <p class="form-control-static">@Model.Orders.Customer.c_Phone1</p>
+        }
+        else
+        {
+            <input type="text" class="form-control" id="phone" readonly/>
+        }
     </div>
+</div>
 
-    <!-- 商品名稱 -->
-    <div class="form-group">
-        @Html.LabelFor(x => x.pu_p_Id, "商品名稱", new { @class = "control-label col-md-2" })
-        <div class="col-md-6">
-            @if (isView)
+<div class="form-group">
+    @Html.LabelFor(x => x.Orders.o_State, "狀態", new { @class = "control-label col-md-2" })
+    <div class="col-md-6">
+        @if (isView)
+        {
+            <p class="form-control-static">@Model.Orders.o_State</p>
+        }
+        else
+        {
+            @Html.DropDownListFor(x => x.Orders.o_State, new SelectList(new[]
             {
-                <p class="form-control-static">@Model.Product.p_Name</p>
-            }
-            else
-            {
-                @Html.TextBoxFor(model => model.pu_p_Id, new { @class = "easyui-combobox", id = "productCombobox", required = "required" })
-            }
-        </div>
+                "完售","預定"
+            }), "請選擇", new { @class = "form-control" })
+        }
     </div>
+</div>
 
-    <!-- 數量 -->
-    <div class="form-group">
-        @Html.LabelFor(x => x.pu_Quantity, "數量", new { @class = "control-label col-md-2" })
-        <div class="col-md-6">
-            @if (isView)
-            {
-                <p class="form-control-static">@Model.pu_Quantity</p>
-            }
-            else
-            {
-                @Html.EditorFor(x => x.pu_Quantity, new { htmlAttributes = new { @class = "form-control", maxlength = 5 } })
-            }
-        </div>
-    </div>
-
-    <!-- 價格 -->
-    <div class="form-group">
-        @Html.LabelFor(x => x.pu_Price, "價格", new { @class = "control-label col-md-2" })
-        <div class="col-md-6">
-            @if (isView)
-            {
-                <p class="form-control-static">@Model.pu_Price</p>
-            }
-            else
-            {
-                @Html.EditorFor(x => x.pu_Price, new { htmlAttributes = new { @class = "form-control", maxlength = 10 } })
-            }
-        </div>
-    </div>
-
-    <!-- 入庫日期 -->
-    <div class="form-group">
-        @Html.LabelFor(x => x.pu_StockInDate, "入庫日期", new { @class = "control-label col-md-2" })
-        <div class="col-md-6">
-            @if (isView)
-            {
-                <p class="form-control-static">@(Model.pu_StockInDate?.ToString("yyyy-MM-dd"))</p>
-            }
-            else
-            {
-                @Html.DateInputFor(x => x.pu_StockInDate, new { @class = "form-control" })
-            }
-        </div>
-    </div>
-
-    <!-- 出庫日期 -->
-    <div class="form-group">
-        @Html.LabelFor(x => x.pu_StockOutDate, "出庫日期", new { @class = "control-label col-md-2" })
-        <div class="col-md-6">
-            @if (isView)
-            {
-                <p class="form-control-static">@(Model.pu_StockOutDate?.ToString("yyyy-MM-dd"))</p>
-            }
-            else
-            {
-                @Html.DateInputFor(x => x.pu_StockOutDate, new { @class = "form-control" })
-            }
-        </div>
-    </div>
-
-    <!-- 狀態群組 -->
-    <fieldset class="form-group">
-        <legend>狀態</legend>
-
-        <div class="form-group">
-            @Html.LabelFor(x => x.pu_IsVehicleInspected, "有無驗車", new { @class = "control-label col-md-2" })
-            <div class="col-md-6">
-                @if (isView)
-                {
-                    if (Model.pu_IsVehicleInspected.HasValue)
+<div class="form-group">
+    <label class="control-label col-md-2">商品清單</label>
+    <div class="col-md-10">
+        @if (!isView)
+        {
+            <button type="button" class="btn btn-primary" id="addProductBtn">新增商品</button>
+        }
+        <table class="table" id="productTable">
+            <thead>
+                <tr>
+                    @if (!isView)
                     {
-                        <p class="form-control-static">@(Model.pu_IsVehicleInspected.Value?"是":"否")</p>
+                        <th>刪除</th>
+                    }
+                    <th>車架編號</th>
+                    <th>產品類別</th>
+                    <th>產品名稱</th>
+                    <th>顏色</th>
+                    <th>數量</th>
+                    <th>單價</th>
+                    <th>價格</th>
+                    <th>車牌</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.OrderDetails.Any())
+                {
+                    foreach (var item in Model.OrderDetails)
+                    {
+                        if (isView)
+                        {
+                            <tr>
+                                <td><p class="form-control-static">@item.Product.p_CarFrameNo</p></td>
+                                <td><p class="form-control-static">@item.Product.p_Type</p></td>
+                                <td><p class="form-control-static">@item.Product.p_Name</p></td>
+                                <td><p class="form-control-static">@item.Product.p_Color</p></td>
+                                <td><p class="form-control-static">@item.od_Quantity</p></td>
+                                <td><p class="form-control-static">@item.Product.p_Price</p></td>
+                                <td><p class="form-control-static">@(item.od_Quantity * item.Product.p_Price)</p></td>
+                                <td><p class="form-control-static">@item.od_LicensePlate</p></td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr>
+                                <td><button type="button" class="btn btn-danger btn-sm removeProductBtn">X</button></td>
+                                <td><input type="text" class="easyui-combobox" id="carFrameNo_@itemIndex" value="@item.Product.p_CarFrameNo"></td>
+                                <td><input type="text" class="form-control" id="productType_@itemIndex" value="@item.Product.p_Type" readonly></td>
+                                <td><input type="text" class="easyui-combobox" id="productName_@itemIndex" value="@item.Product.p_Name"></td>
+                                <td><input type="text" class="form-control" id="productColor_@itemIndex" value="@item.Product.p_Color" readonly></td>
+                                <td><input type="number" class="form-control" id="productQuantity_@itemIndex" name="OrderDetails[@itemIndex].od_Quantity" value="@item.od_Quantity" required></td>
+                                <td><input type="number" class="form-control" id="productPrice_@itemIndex" value="@item.Product.p_Price" readonly></td>
+                                <td><input type="number" class="form-control" id="productTotalPrice_@itemIndex" value="" readonly></td>
+                                <td><input type="text" class="form-control" id="licensePlate_@itemIndex" name="OrderDetails[@itemIndex].od_LicensePlate" value="@item.od_LicensePlate"></td>
+                                <td><input type="hidden" id="productId_@itemIndex" name="OrderDetails[@itemIndex].od_p_Id" value="@item.od_p_Id"></td>
+                            </tr>
+                        }
+                        itemIndex++;
                     }
                 }
                 else
                 {
-                    <div class="radio">
-                        <label>@Html.RadioButtonFor(x => x.pu_IsVehicleInspected, true)有</label>
-                    </div>
-                    <div class="radio">
-                        <label>@Html.RadioButtonFor(x => x.pu_IsVehicleInspected, false)無</label>
-                    </div>
+                    <tr>
+                        <td><button type="button" class="btn btn-danger btn-sm removeProductBtn">X</button></td>
+                        <td><input type="text" class="easyui-combobox" id="carFrameNo_0"></td>
+                        <td><input type="text" class="form-control" id="productType_0" readonly></td>
+                        <td><input type="text" class="easyui-combobox" id="productName_0"></td>
+                        <td><input type="text" class="form-control" id="productColor_0" readonly></td>
+                        <td><input type="number" class="form-control" id="productQuantity_0" name="OrderDetails[0].od_Quantity" required></td>
+                        <td><input type="number" class="form-control" id="productPrice_0" readonly></td>
+                        <td><input type="number" class="form-control" id="productTotalPrice_0" readonly></td>
+                        <td><input type="text" class="form-control" id="licensePlate_0" name="OrderDetails[0].od_LicensePlate"></td>
+                        <td><input type="hidden" id="productId_0" name="OrderDetails[0].od_p_Id"></td>
+                    </tr>
                 }
-            </div>
-        </div>
+            </tbody>
+        </table>
+    </div>
+</div>
 
-        <div class="form-group">
-            @Html.LabelFor(x => x.pu_HasFactoryCertificate, "有無廠證", new { @class = "control-label col-md-2" })
-            <div class="col-md-6">
-                @if (isView)
-                {
-                    if (Model.pu_HasFactoryCertificate.HasValue)
-                    {
-                        <p class="form-control-static">@(Model.pu_HasFactoryCertificate.Value?"是":"否")</p>
-                    }
-                }
-                else
-                {
-                    <div class="radio">
-                        <label>@Html.RadioButtonFor(x => x.pu_HasFactoryCertificate, true)有</label>
-                    </div>
-                    <div class="radio">
-                        <label>@Html.RadioButtonFor(x => x.pu_HasFactoryCertificate, false)無</label>
-                    </div>
-                }
-            </div>
-        </div>
+<div class="form-group">
+    @Html.LabelFor(x => x.Orders.o_TotalPrice, "總價格", new { @class = "control-label col-md-2" })
+    <div class="col-md-6">
+        @if (isView)
+        {
+            <p class="form-control-static">@Model.Orders.o_TotalPrice</p>
+        }
+        else
+        {
+            @Html.TextBoxFor(x => x.Orders.o_TotalPrice, new { @class = "form-control", @readonly = "readonly" })
+        }
+    </div>
+</div>
 
-        <div class="form-group">
-            @Html.LabelFor(x => x.pu_IsQuality, "良品/不良品", new { @class = "control-label col-md-2" })
-            <div class="col-md-6">
-                @if (isView)
-                {
-                    if (Model.pu_IsQuality.HasValue)
-                    {
-                        <p class="form-control-static">@(Model.pu_IsQuality.Value?"是":"否")</p>
-                    }
-                }
-                else
-                {
-                    <div class="radio">
-                        <label>@Html.RadioButtonFor(x => x.pu_IsQuality, true)良品</label>
-                    </div>
-                    <div class="radio">
-                        <label>@Html.RadioButtonFor(x => x.pu_IsQuality, false) 不良品</label>
-                    </div>
-                }
-            </div>
-        </div>
-    </fieldset>
+<fieldset class="form-group">
+    <legend>付款情況</legend>
 
-    <!-- 付款狀況群組 -->
-    <fieldset class="form-group">
-        <legend>付款狀況</legend>
-
-        <div class="form-group">
-            @Html.LabelFor(x => x.pu_IsSettled, "結清", new { @class = "control-label col-md-2" })
-            <div class="col-md-6">
-                @if (isView)
-                {
-                    if (Model.pu_IsSettled.HasValue)
-                    {
-                        <p class="form-control-static">@(Model.pu_IsSettled.Value?"是":"否")</p>
-                    }
-                }
-                else
-                {
-                    <div class="radio">
-                        <label>@Html.RadioButtonFor(x => x.pu_IsSettled, true) 是</label>
-                    </div>
-                    <div class="radio">
-                        <label>@Html.RadioButtonFor(x => x.pu_IsSettled, false) 否</label>
-                    </div>
-                }
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(x => x.pu_IsPaymentReceived, "收款", new { @class = "control-label col-md-2" })
-            <div class="col-md-6">
-                @if (isView)
-                {
-                    if (Model.pu_IsPaymentReceived.HasValue)
-                    {
-                        <p class="form-control-static">@(Model.pu_IsPaymentReceived.Value?"是":"否")</p>
-                    }
-                }
-                else
-                {
-                    <div class="radio">
-                        <label>@Html.RadioButtonFor(x => x.pu_IsPaymentReceived, true) 是</label>
-                    </div>
-                    <div class="radio">
-                        <label>@Html.RadioButtonFor(x => x.pu_IsPaymentReceived, false) 否</label>
-                    </div>
-                }
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(x => x.pu_IsInstallment, "分期", new { @class = "control-label col-md-2" })
-            <div class="col-md-6">
-                @if (isView)
-                {
-                    if (Model.pu_IsInstallment.HasValue)
-                    {
-                        <p class="form-control-static">@(Model.pu_IsInstallment.Value?"是":"否")</p>
-                    }
-                }
-                else
-                {
-                    <div class="radio">
-                        <label>@Html.RadioButtonFor(x => x.pu_IsInstallment, true) 是</label>
-                    </div>
-                    <div class="radio">
-                        <label>@Html.RadioButtonFor(x => x.pu_IsInstallment, false) 否</label>
-                    </div>
-                }
-            </div>
-        </div>
-    </fieldset>
-
-    <!-- 按鈕 -->
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
+        @Html.LabelFor(x => x.Orders.o_IsSettled, "結清", new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
             @if (isView)
             {
-                @Html.ActionLink("編輯", "Edit", new { id = Model.pu_Id }, new { @class = "btn btn-primary" })
+                if (Model.Orders.o_IsSettled.HasValue)
+                {
+                    <p class="form-control-static">@(Model.Orders.o_IsSettled.Value?"是":"否")</p>
+                }
             }
             else
             {
-                <input type="submit" value="儲存" class="btn btn-primary" />
+                <div class="radio">
+                    <label>@Html.RadioButtonFor(x => x.Orders.o_IsSettled, true)有</label>
+                </div>
+                <div class="radio">
+                    <label>@Html.RadioButtonFor(x => x.Orders.o_IsSettled, false)無</label>
+                </div>
             }
-
-            @Html.ActionLink("返回列表", "Index", "Purchase", new { @class = "btn btn-secondary" })
         </div>
     </div>
-</section>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Orders.o_IsCollectPayment, "收款", new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @if (isView)
+            {
+                if (Model.Orders.o_IsCollectPayment.HasValue)
+                {
+                    <p class="form-control-static">@(Model.Orders.o_IsCollectPayment.Value?"是":"否")</p>
+                }
+            }
+            else
+            {
+                <div class="radio">
+                    <label>@Html.RadioButtonFor(x => x.Orders.o_IsCollectPayment, true)有</label>
+                </div>
+                <div class="radio">
+                    <label>@Html.RadioButtonFor(x => x.Orders.o_IsCollectPayment, false)無</label>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Orders.o_IsInstallment, "分期", new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @if (isView)
+            {
+                if (Model.Orders.o_IsInstallment.HasValue)
+                {
+                    <p class="form-control-static">@(Model.Orders.o_IsInstallment.Value?"是":"否")</p>
+                }
+            }
+            else
+            {
+                <div class="radio">
+                    <label>@Html.RadioButtonFor(x => x.Orders.o_IsInstallment, true)是</label>
+                </div>
+                <div class="radio">
+                    <label>@Html.RadioButtonFor(x => x.Orders.o_IsInstallment, false) 否</label>
+                </div>
+            }
+        </div>
+    </div>
+</fieldset>
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        @if (isView)
+        {
+            @Html.ActionLink("編輯", "Edit", new { id = Model.Orders.o_Id }, new { @class = "btn btn-primary" })
+        }
+        else
+        {
+            <input type="submit" value="儲存" class="btn btn-primary" />
+        }
+
+        @Html.ActionLink("返回列表", "Index", "Purchase", new { @class = "btn btn-secondary" })
+    </div>
+</div>
 
 <script>
     $(function () {
-        $('#supplierCombobox').combobox({
-            url: '@Url.Action("GetSuppliers")',
+        function updateProductDetailsByCarFrameNo(index, record) {
+            $('#productType_' + index).val(record.type);
+            $('#productName_' + index).combobox('setValue', record.name);  // 使用 combobox 方法設置值
+            $('#productColor_' + index).val(record.color);
+            $('#productQuantity_' + index).val(1);
+            $('#productPrice_' + index).val(record.price);
+            $('#productTotalPrice_' + index).val(record.price);
+            $('#productId_' + index).val(record.id);  // 設置隱藏域的產品ID
+            calculateTotalOrderPrice(); // 更新總價格
+        }
+
+        function updateProductDetailsByName(index, record) {
+            $('#productType_' + index).val(record.type);
+            $('#carFrameNo_' + index).combobox('setValue', record.carFrameNo);  // 使用 combobox 方法設置值
+            $('#productColor_' + index).val(record.color);
+            $('#productQuantity_' + index).val(1);
+            $('#productPrice_' + index).val(record.price);
+            $('#productTotalPrice_' + index).val(record.price);
+            $('#productId_' + index).val(record.id);  // 設置隱藏域的產品ID
+            calculateTotalOrderPrice(); // 更新總價格
+        }
+
+        function updateTotalPrice(index) {
+            var quantity = $('#productQuantity_' + index).val();
+            var price = $('#productPrice_' + index).val();
+            var totalPrice = quantity * price;
+            $('#productTotalPrice_' + index).val(totalPrice);
+        }
+
+        // 計算總金額
+        function calculateTotalOrderPrice() {
+            var totalOrderPrice = 0;
+            $('[id^="productTotalPrice_"]').each(function () {
+                var price = parseFloat($(this).val());
+                if (!isNaN(price)) {
+                    totalOrderPrice += price;
+                }
+            });
+            $('#Orders_o_TotalPrice').val(totalOrderPrice);
+        }
+
+        function initializeProductTable() {
+            $('#productTable tbody tr').each(function (index) {
+                var quantity = $(this).find('[id^="productQuantity_"]').val();
+                var price = $(this).find('[id^="productPrice_"]').val();
+                var totalPrice = quantity * price;
+                $(this).find('[id^="productTotalPrice_"]').val(totalPrice);
+            });
+            calculateTotalOrderPrice();
+        }
+
+        // 初始化表格時計算每行的總價格
+        initializeProductTable();
+
+        // 搜尋客戶
+        $('#customer').combobox({
+            url: '@Url.Action("GetCustomer")',
+            method: 'get',
             valueField: 'id',
             textField: 'text',
-            onSelect: function (record) {
-                setTimeout(loadProducts, 100); // 延遲100毫秒
+            onChange: function (newValue, oldValue) {
+                var data = $(this).combobox('getData');
+                var selected = data.find(function (item) {
+                    return item.id == newValue;
+                });
+                if (selected) {
+                    $('#phone').val(selected.phone);
+                }
             }
         });
 
-        $('#categoryDropdown').change(function () {
-            loadProducts();
+        // 動態新增商品
+        $('#addProductBtn').click(function () {
+            var $tableBody = $('#productTable tbody');
+            var $lastRow = $tableBody.find('tr:last');
+            var $newRow = $lastRow.clone();
+
+            // 移除克隆行中的 combobox 插件附加的 HTML 元素
+            $newRow.find('.combo').remove();
+            $newRow.find('.textbox-value').remove();
+            $newRow.find('.easyui-combobox').each(function () {
+                var $this = $(this);
+                var id = $this.attr('id');
+                $this.replaceWith('<input type="text" class="easyui-combobox" id="' + id + '" name="' + $this.attr('name') + '">');
+            });
+
+            // 計算新行的索引
+            var newIndex = $tableBody.find('tr').length;
+
+            // 更新新行的名稱和ID屬性
+            $newRow.find('input').each(function () {
+                var name = $(this).attr('name');
+                if (name) {
+                    var newName = name.replace(/\d+/, newIndex); // 只替換數字部分
+                    $(this).attr('name', newName);
+                }
+
+                var id = $(this).attr('id');
+                if (id) {
+                    var baseId = id.replace(/\d+$/, ''); // 移除數字
+                    $(this).attr('id', baseId + newIndex);
+                }
+                $(this).val(''); // 清空值
+            });
+
+            $tableBody.append($newRow);
+
+            // 重新初始化新行中的 combobox
+            $('#carFrameNo_' + newIndex).combobox({
+                valueField: 'id',
+                textField: 'text',
+                url: '@Url.Action("GetProductDetailsByCarFrameNo")',
+                onSelect: function (rec) {
+                    updateProductDetailsByCarFrameNo(newIndex, rec);
+                }
+            });
+
+            $('#productName_' + newIndex).combobox({
+                valueField: 'id',
+                textField: 'text',
+                url: '@Url.Action("GetProductDetailsByName")',
+                onSelect: function (rec) {
+                    updateProductDetailsByName(newIndex, rec);
+                }
+            });
+
+            // 綁定數量和價格欄位的變更事件
+            $newRow.find('[id^="productQuantity_"], [id^="productPrice_"]').change(function () {
+                var index = $(this).attr('id').match(/\d+$/)[0]; // 提取索引
+                updateTotalPrice(index);
+                calculateTotalOrderPrice();
+            });
         });
 
-        $('#productCombobox').combobox({
+        // 刪除列
+        $('#productTable').on('click', '.removeProductBtn', function () {
+            $(this).closest('tr').remove();
+            // 重新編號
+            $('#productTable tbody tr').each(function (index) {
+                $(this).find('input').each(function () {
+                    var name = $(this).attr('name');
+                    if (name) {
+                        var newName = name.replace(/\d+/, index); // 只替換數字部分
+                        $(this).attr('name', newName);
+                    }
+                    var id = $(this).attr('id');
+                    if (id) {
+                        var baseId = id.replace(/\d+$/, ''); // 移除數字
+                        $(this).attr('id', baseId + index);
+                    }
+                });
+            });
+            calculateTotalOrderPrice(); // 更新總價格
+        });
+
+        // 初始化第一行的 combobox
+        $('#carFrameNo_0').combobox({
             valueField: 'id',
             textField: 'text',
-            mode: 'remote'
+            url: '@Url.Action("GetProductDetailsByCarFrameNo")',
+            onSelect: function (rec) {
+                updateProductDetailsByCarFrameNo(0, rec);
+            }
         });
 
-        function loadProducts() {
-            var supId = $('#supplierCombobox').combobox('getValue');
-            var type = $('#categoryDropdown').val();
+        $('#productName_0').combobox({
+            valueField: 'id',
+            textField: 'text',
+            url: '@Url.Action("GetProductDetailsByName")',
+            onSelect: function (rec) {
+                updateProductDetailsByName(0, rec);
+            }
+        });
 
-            $('#productCombobox').combobox('clear');
-            $('#productCombobox').combobox('reload', '@Url.Action("GetProducts")' + '?supId=' + supId + '&type=' + type);
-        }
+        // 綁定數量和價格欄位的變更事件
+        $('[id^="productQuantity_"], [id^="productPrice_"]').change(function () {
+            var index = $(this).attr('id').match(/\d+$/)[0]; // 提取索引
+            updateTotalPrice(index);
+            calculateTotalOrderPrice();
+        });
 
-        // 初始載入所有產品
-        loadProducts();
+        // 初始化表格
+        initializeProductTable();
     });
 </script>
-

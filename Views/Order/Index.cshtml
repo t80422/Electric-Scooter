@@ -32,7 +32,7 @@
                 <div class="tool-flex">
                     <div class="filter-select">
                         <label>訂單狀態</label>
-                        <select name="type">
+                        <select name="state">
                             <option value="">請選擇</option>
                             <option value="完售" @(Request.QueryString["state"] == "完售" ? "selected" : "")>完售</option>
                             <option value="預定" @(Request.QueryString["state"] == "預定" ? "selected" : "")>預定</option>
@@ -42,12 +42,17 @@
                     <div class="filter-date">
                         <label>訂單日期</label>
                         <div>
-                            <input type="date" value="@Request.QueryString["startDate"]">
+                            <input type="date" name="startDate" value="@Request.QueryString["startDate"]">
                         </div>
                         <span></span>
                         <div>
-                            <input type="date" value="@Request.QueryString["endDate"]">
+                            <input type="date" name="endDate" value="@Request.QueryString["endDate"]">
                         </div>
+                    </div>
+
+                    <div class="filter-bottom">
+                        <button type="submit" class="btn-filter-submit">確定</button>
+                        <a href="@Url.Action("Index")" class="btn-filter-clean">清除條件</a>
                     </div>
 
                     <div class="tool-search">
@@ -73,83 +78,67 @@
                         <div class="f-0">
                             <input type="checkbox" id="checkAll">
                         </div>
-                        <div class="f-1">訂單編號</div>
-                        <div class="f-1">訂單日期</div>
+                        <div class="f-1">
+                            <a href="@GetSortableLink("訂單編號","OrderNo")">訂單編號</a>
+                        </div>
+                        <div class="f-1">
+                            <a href="@GetSortableLink("訂單日期","Date")">訂單日期</a>
+                        </div>
                         <div class="f-1">訂購人</div>
-                        <div class="f-1">訂單狀態</div>
-                        <div class="f-1">總價格</div>
+                        <div class="f-1">
+                            <a href="@GetSortableLink("訂單狀態","State")">訂單狀態</a>
+                        </div>
+                        <div class="f-1">
+                            <a href="@GetSortableLink("總價格","Price")">總價格</a>
+                        </div>
                         <div class="f-1">結清</div>
                         <div class="f-1">收款</div>
                         <div class="f-1">分期</div>
-                        @*<div class="f-1">
-                                <a href="@GetSortableLink("入庫日期","StockIn")">入庫日期</a>
-                            </div>*@
                         <div class="f-1">操作</div>
                     </div>
 
                     <div class="list-list">
-                        @*@foreach (var data in Model)
-                            {
-                                <div class="list-row" onclick="location.href='@Url.Action("Details", "Purchase", new { id = data.pu_Id })'" style="cursor: pointer;">
-                                    <div class="f-0">
-                                        <input type="checkbox" class="list-checkbox" onclick="event.stopPropagation();" />
-                                    </div>
-                                    <div class="f-1">@data.Product.Supplier.s_Name</div>
-                                    <div class="f-1">@data.Product.p_Type</div>
-                                    <div class="f-1">
-                                        @if (data.pu_IsVehicleInspected.HasValue)
-                                        {
-                                            <input type="checkbox" disabled @(data.pu_IsVehicleInspected.Value ? "checked" : "") />
-                                        }
-                                    </div>
-                                    <div class="f-1">
-                                        @if (data.pu_HasFactoryCertificate.HasValue)
-                                        {
-                                            <input type="checkbox" disabled @(data.pu_HasFactoryCertificate.Value ? "checked" : "") />
-                                        }
-
-                                    </div>
-                                    <div class="f-1">
-                                        @if (data.pu_IsVehicleInspected.HasValue)
-                                        {
-                                            <input type="checkbox" disabled @(data.pu_IsQuality.Value ? "checked" : "") />
-                                        }
-
-                                    </div>
-                                    <div class="f-1">@data.pu_Price</div>
-                                    <div class="f-1">
-                                        @if (data.pu_IsSettled.HasValue)
-                                        {
-                                            <input type="checkbox" disabled @(data.pu_IsSettled.Value ? "checked" : "") />
-                                        }
-
-                                    </div>
-                                    <div class="f-1">
-                                        @if (data.pu_IsPaymentReceived.HasValue)
-                                        {
-                                            <input type="checkbox" disabled @(data.pu_IsPaymentReceived.Value ? "checked" : "") />
-                                        }
-
-                                    </div>
-                                    <div class="f-1">
-                                        @if (data.pu_IsInstallment.HasValue)
-                                        {
-                                            <input type="checkbox" disabled @(data.pu_IsInstallment.Value ? "checked" : "") />
-                                        }
-
-                                    </div>
-                                    <div class="f-1">@(data.pu_StockInDate?.ToString("yyyy-MM-dd"))</div>
-                                    <div class="f-1">@(data.pu_StockOutDate?.ToString("yyyy-MM-dd"))</div>
-                                    <div class="f-1" onclick="event.stopPropagation();">
-                                        @Html.ActionLink(" ", "Edit", new { id = data.pu_Id }, new { @class = "fa-solid fa-pen-to-square", style = "margin-right: 10px;", title = "修改" })
-
-                                        <form action="@Url.Action("Delete", "Purchase", new { id = data.pu_Id})" method="post" style="display: inline;">
-                                            @Html.AntiForgeryToken()
-                                            <button type="submit" class="fa-solid fa-trash" onclick="return confirm('確定要刪除這個項目嗎？')" style="border: none; background: none;" title="刪除"></button>
-                                        </form>
-                                    </div>
+                        @foreach (var data in Model)
+                        {
+                            <div class="list-row" onclick="location.href='@Url.Action("Details", "Order", new { id = data.o_Id })'" style="cursor: pointer;">
+                                <div class="f-0">
+                                    <input type="checkbox" class="list-checkbox" onclick="event.stopPropagation();" />
                                 </div>
-                            }*@
+                                <div class="f-1">@data.o_No</div>
+                                <div class="f-1">@(data.o_Date?.ToString("yyyy-MM-dd"))</div>
+                                <div class="f-1">@data.Customer.c_Name</div>
+                                <div class="f-1">@data.o_State</div>
+                                <div class="f-1">@data.o_TotalPrice</div>
+                                <div class="f-1">
+                                    @if (data.o_IsSettled.HasValue)
+                                    {
+                                        <input type="checkbox" disabled @(data.o_IsSettled.Value ? "checked" : "") />
+                                    }
+                                </div>
+                                <div class="f-1">
+                                    @if (data.o_IsCollectPayment.HasValue)
+                                    {
+                                        <input type="checkbox" disabled @(data.o_IsCollectPayment.Value ? "checked" : "") />
+                                    }
+
+                                </div>
+                                <div class="f-1">
+                                    @if (data.o_IsInstallment.HasValue)
+                                    {
+                                        <input type="checkbox" disabled @(data.o_IsInstallment.Value ? "checked" : "") />
+                                    }
+
+                                </div>
+                                <div class="f-1" onclick="event.stopPropagation();">
+                                    @Html.ActionLink(" ", "Edit", new { id = data.o_Id }, new { @class = "fa-solid fa-pen-to-square", style = "margin-right: 10px;", title = "修改" })
+
+                                    <form action="@Url.Action("Delete", "Order", new { id = data.o_Id})" method="post" style="display: inline;">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="fa-solid fa-trash" onclick="return confirm('確定要刪除這個項目嗎？')" style="border: none; background: none;" title="刪除"></button>
+                                    </form>
+                                </div>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -158,7 +147,7 @@
         <div class="pages-wrap">
             <button class="btn-prev"></button>
             <button class="btn-next"></button>
-            @*<span>showing @Model.Count() of @Model.Count()</span>*@
+            <span>showing @Model.Count() of @Model.Count()</span>
         </div>
     </div>
 </main>
