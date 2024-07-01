@@ -1,0 +1,178 @@
+﻿@model Electric_Scooter.Models.Points
+@using Electric_Scooter.Helpers
+@{
+    var isView = ViewBag.IsView ?? false; // 判斷是詳細資料還是表單
+}
+
+<div class="form-group">
+    <div class="display-flex flex-1">
+        @Html.LabelFor(x => x.po_c_Id, "客戶", new { @class = "flex-150px text-right" })
+        <div class="flex-1">
+            @if (isView)
+            {
+                <p>@Model.Customer.c_Name</p>
+            }
+            else
+            {
+                @Html.TextBoxFor(x => x.po_c_Id, new { @class = "easyui-combobox", id = "customer", required = "required" })
+            }
+        </div>
+    </div>
+    <div class="display-flex flex-1">
+        @Html.LabelFor(x => x.Orders.o_No, "電話", new { @class = "flex-150px text-right" })
+        <div class="flex-1">
+            @if (isView)
+            {
+                <p>@Model.Customer.c_Phone1</p>
+            }
+            else
+            {
+                <input type="text" id="phone" class="form-control" value="@(Model.Customer?.c_Phone1)" readonly />
+            }
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="display-flex flex-1">
+        @Html.LabelFor(x => x.Orders.o_c_Id, "訂單編號", new { @class = "flex-150px text-right" })
+        <div class="flex-1">
+            @if (isView)
+            {
+                <p>@Model.po_o_Id</p>
+            }
+            else
+            {
+                <input type="text" class="form-control" value="@(Model.Orders?.o_No)" readonly />
+            }
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="display-flex flex-1">
+        @Html.LabelFor(x => x.po_Quantity, "點數", new { @class = "flex-150px text-right" })
+        <div class="flex-1">
+            @if (isView)
+            {
+                <p>@Model.po_Quantity</p>
+            }
+            else
+            {
+                @Html.EditorFor(x => x.po_Quantity, new { htmlAttributes = new { @class = "form-control" } })
+            }
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="display-flex flex-1">
+        @Html.LabelFor(x => x.po_SentDate, "發送日", new { @class = "flex-150px text-right" })
+        <div class="flex-1">
+            @if (isView)
+            {
+                <p>@(Model.po_SentDate.Value.ToString("yyyy-MM-dd"))</p>
+            }
+            else
+            {
+                @Html.DateInputFor(x => x.po_SentDate, new { @class = "form-control", required = "required" })
+            }
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="display-flex flex-1">
+        @Html.LabelFor(x => x.po_DueDate, "到期日", new { @class = "flex-150px text-right" })
+        <div class="flex-1">
+            @if (isView)
+            {
+                <p>@(Model.po_DueDate.Value.ToString("yyyy-MM-dd"))</p>
+            }
+            else
+            {
+                @Html.DateInputFor(x => x.po_DueDate, new { @class = "form-control" })
+            }
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="display-flex flex-1">
+        @Html.LabelFor(x => x.po_State, "狀態", new { @class = "flex-150px text-right" })
+        <div class="flex-1">
+            @if (isView)
+            {
+                if (Model.po_State.HasValue)
+                {
+                    <p>@(Model.po_State.Value?"是":"否")</p>
+                }
+            }
+            else
+            {
+                <div class="radio">
+                    <label>@Html.RadioButtonFor(x => x.po_State, true)有效</label>
+                </div>
+                <div class="radio">
+                    <label>@Html.RadioButtonFor(x => x.po_State, false) 失效</label>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="display-flex flex-1">
+        @Html.LabelFor(x => x.po_State, "狀態", new { @class = "flex-150px text-right" })
+        <div class="flex-1">
+            @if (isView)
+            {
+                if (Model.po_State.HasValue)
+                {
+                    <p>@Model.po_Type</p>
+                }
+            }
+            else
+            {
+                @Html.DropDownListFor(x => x.po_Type, new SelectList(new[]
+                {
+                "購買","維修","保養"
+                }), "請選擇", new { @class = "form-control" })
+            }
+        </div>
+    </div>
+</div>
+
+<div class="form-bottom-btn">
+    @if (isView)
+    {
+        @Html.ActionLink("編輯", "Edit", new { id = Model.po_Id }, new { @class = "btn btn-primary" })
+    }
+    else
+    {
+        <input type="submit" value="儲存" class="btn btn-primary" />
+    }
+
+    @Html.ActionLink("返回列表", "Index", "Point", new { @class = "btn btn-secondary" })
+</div>
+
+<script>
+    $(function () {
+        // 搜尋客戶
+        $('#customer').combobox({
+            url: '@Url.Action("GetCustomer")',
+            method: 'get',
+            valueField: 'id',
+            textField: 'text',
+            onChange: function (newValue, oldValue) {
+                var data = $(this).combobox('getData');
+                var selected = data.find(function (item) {
+                    return item.id == newValue;
+                });
+                if (selected) {
+                    $('#phone').val(selected.phone);
+                }
+            }
+        });
+    })
+</script>

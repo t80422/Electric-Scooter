@@ -1,0 +1,102 @@
+﻿@model Electric_Scooter.ViewModels.LoginVM
+@{
+    Layout = "";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>愛騏</title>
+    <script src="https://kit.fontawesome.com/dc64e3707d.js" crossorigin="anonymous"></script>
+    <link href="image/favico.ico" rel="shortcut icon">
+    <link rel="stylesheet" href="~/Content/css/login1.css">
+    <link rel="stylesheet" href="~/Content/css/login2.css">
+    <link rel="stylesheet" href="~/Content/css/tempStyle.css">
+    <script src="~/assets/js/jquery-2.1.4.min.js"></script>
+
+    <style>
+        .login-logo {
+            margin-bottom: 0;
+        }
+
+        .login-h3 {
+            color: var(--c1);
+            text-align: center;
+            font-size: 0.8vw;
+        }
+
+        .login-logo img {
+            max-width: 55% !important;
+        }
+    </style>
+
+    @if (Session["msg"] != null && !String.IsNullOrEmpty(Session["msg"].ToString()))
+    {
+        <script>
+            $(function () {
+                $('.popup-overlay').show();
+                $('.popup-wrap.msg').show();
+                $('.popup-wrap.msg .popup-msg').text("@Session["msg"].ToString()");
+                $('.popup-wrap.msg .popup-sumbit').on('click', function () {
+                    $('.popup-overlay').hide();
+                    $('.popup-wrap.msg').hide();
+                })
+            })
+        </script>
+
+        Session["msg"] = null;
+    }
+</head>
+
+<body>
+    <article id="wrap" class="is-login">
+        <div class="login-bg">
+            <img src="~/Content/image/bg.png" alt="">
+        </div>
+        <main class="login-wrap">
+            <div class="login-main">
+                <figure class="login-logo">
+                    <div class="login-font" style="font-size:150px;color:white;">SIGN IN</div>
+                </figure>
+
+                @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="login-form">
+                        <div class="login-input is-account">
+                            @*<input type="text" placeholder="帳號" required name="account">*@
+                            @Html.TextBoxFor(x => x.Username, new { placeholder = "帳號",required=""})
+                        </div>
+
+                        <div class="login-input is-password">
+                            @Html.PasswordFor(m => m.Password, new { placeholder = "密碼", required = "" })
+                        </div>
+
+                        <div class="login-btn">
+                            <button type="submit">登入</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </main>
+    </article>
+
+    <!-- popup -->
+    <div class="popup-overlay"></div>
+
+    <div class="popup-wrap msg">
+        <div class="popup-main">
+            <div class="popup-content">
+                <p class="popup-msg">登入成功</p>
+                <div class="popup-btn">
+                    <button class="btn-submit popup-sumbit">確定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace Electric_Scooter.Controllers
 {
+    [IsLogin]
     /// <summary>
     /// 進貨系統
     /// </summary>

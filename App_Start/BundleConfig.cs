@@ -30,7 +30,7 @@ namespace Electric_Scooter
                 "~/Content/css/style.css",
                 "~/Content/css/tempStyle.css"));
 
-            BundleTable.EnableOptimizations = false; // 確保啟用
+            BundleTable.EnableOptimizations = true; // 確保啟用
         }
     }
 }

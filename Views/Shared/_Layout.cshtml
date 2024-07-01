@@ -57,29 +57,9 @@
                                 <a href="@Url.Action("Index","Order")">銷貨系統</a>
                             </div>
                         </li>
-                        <li class="nav-item nav-revenue">
-                            <div class="nav-box">
-                                <button><span>營收分析</span></button>
-                                <div class="nav-sub">
-                                    <ul>
-                                        <li><a href="">連結一</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="nav-item nav-statistic">
-                            <div class="nav-box">
-                                <button><span>統計報表</span></button>
-                                <div class="nav-sub">
-                                    <ul>
-                                        <li><a href="">連結一</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </li>
                         <li class="nav-item">
                             <div class="nav-box">
-                                <a href="##"><span>實體店面管理</span></a>
+                                <a href="@Url.Action("Index","Point")">會員點數管理</a>
                             </div>
                         </li>
                     </ul>
@@ -90,10 +70,10 @@
         <header class="header-wrap">
             <section class="header-main">
                 <button class="header-nav"></button>
-                <div class="header-search">
+                @*<div class="header-search">
                     <input type="text" placeholder="請輸入關鍵字搜尋">
                     <button class="btn-search"></button>
-                </div>
+                </div>*@
                 <div class="user">
                     <div class="user-data"><a href="##">個人資料</a></div>
                     <div class="user-set"><a href="##">設定</a></div>

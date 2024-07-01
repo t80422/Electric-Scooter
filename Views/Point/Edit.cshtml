@@ -1,0 +1,30 @@
+﻿@model Electric_Scooter.Models.Points
+
+<main class="container-wrap">
+    <div class="container-main">
+        <!-- breadcrumb -->
+        <section class="breadcrumb-wrap">
+            <ul>
+                <li>
+                    <a href="">首頁</a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index")">會員點數管理</a>
+                </li>
+                <li>
+                    <p>修改</p>
+                </li>
+            </ul>
+        </section>
+        <!-- main -->
+        @using (Html.BeginForm("Edit", "Point", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <section class="form-horizontal">
+                @Html.HiddenFor(x => x.po_Id)
+                @Html.Partial("Form", Model)
+            </section>
+        }
+    </div>
+</main>

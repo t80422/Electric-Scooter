@@ -14,9 +14,7 @@
           <Property Name="c_Gender" Type="bit" />
           <Property Name="c_Birthday" Type="datetime" />
           <Property Name="c_IdCard" Type="nvarchar" MaxLength="10" />
-          <Property Name="c_LineId" Type="nvarchar" MaxLength="20" />
           <Property Name="c_EMail" Type="nvarchar" MaxLength="40" />
-          <Property Name="c_Nationality" Type="nvarchar" MaxLength="25" />
           <Property Name="c_PostalCode" Type="nvarchar" MaxLength="5" />
           <Property Name="c_City" Type="nvarchar" MaxLength="10" />
           <Property Name="c_Address" Type="nvarchar" MaxLength="100" />
@@ -25,11 +23,12 @@
           <Property Name="c_TaxId" Type="nvarchar" MaxLength="8" />
           <Property Name="c_Company" Type="nvarchar" MaxLength="50" />
           <Property Name="c_Phone1" Type="nvarchar" MaxLength="50" />
-          <Property Name="c_Phone1_Type" Type="nvarchar" MaxLength="50" />
           <Property Name="c_Phone2" Type="nvarchar" MaxLength="50" />
           <Property Name="c_Phone2_Type" Type="nvarchar" MaxLength="50" />
-          <Property Name="c_Phone3" Type="nvarchar" MaxLength="50" />
-          <Property Name="c_Phone3_Type" Type="nvarchar" MaxLength="50" />
+          <Property Name="c_No" Type="nvarchar" MaxLength="50" />
+          <Property Name="c_Area" Type="nvarchar" MaxLength="50" />
+          <Property Name="c_CarFrameNo" Type="nvarchar(max)" />
+          <Property Name="c_LicensePlate" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -62,9 +61,20 @@
           </Key>
           <Property Name="po_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="po_c_Id" Type="int" />
+          <Property Name="po_o_Id" Type="int" />
           <Property Name="po_Quantity" Type="int" />
           <Property Name="po_SentDate" Type="datetime" />
           <Property Name="po_DueDate" Type="datetime" />
+          <Property Name="po_State" Type="bit" />
+          <Property Name="po_Type" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PointSet">
+          <Key>
+            <PropertyRef Name="ps_Id" />
+          </Key>
+          <Property Name="ps_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ps_Multiple" Type="float" Nullable="false" />
+          <Property Name="ps_Validity" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -80,6 +90,7 @@
           <Property Name="p_Price" Type="int" />
           <Property Name="p_s_Id" Type="int" />
           <Property Name="p_CreateDate" Type="datetime" />
+          <Property Name="p_No" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Purchase">
           <Key>
@@ -187,6 +198,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Points_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+          <End Role="Points" Type="Self.Points" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="o_Id" />
+            </Principal>
+            <Dependent Role="Points">
+              <PropertyRef Name="po_o_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Product_Supplier">
           <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
@@ -228,6 +251,7 @@
           <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Points" EntityType="Self.Points" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PointSet" EntityType="Self.PointSet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Purchase" EntityType="Self.Purchase" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
@@ -248,6 +272,10 @@
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Points" EntitySet="Points" />
           </AssociationSet>
+          <AssociationSet Name="FK_Points_Orders" Association="Self.FK_Points_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Points" EntitySet="Points" />
+          </AssociationSet>
           <AssociationSet Name="FK_Product_Supplier" Association="Self.FK_Product_Supplier">
             <End Role="Supplier" EntitySet="Supplier" />
             <End Role="Product" EntitySet="Product" />
@@ -266,26 +294,12 @@
     <edmx:ConceptualModels>
       <Schema Namespace="I_ChiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="I_ChiEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Customer" EntityType="I_ChiModel.Customer" />
           <EntitySet Name="OrderDetail" EntityType="I_ChiModel.OrderDetail" />
           <EntitySet Name="Orders" EntityType="I_ChiModel.Orders" />
-          <EntitySet Name="Points" EntityType="I_ChiModel.Points" />
           <EntitySet Name="Product" EntityType="I_ChiModel.Product" />
           <EntitySet Name="Purchase" EntityType="I_ChiModel.Purchase" />
           <EntitySet Name="Supplier" EntityType="I_ChiModel.Supplier" />
           <EntitySet Name="Users" EntityType="I_ChiModel.Users" />
-          <AssociationSet Name="FK_Orders_Customer" Association="I_ChiModel.FK_Orders_Customer">
-            <End Role="Customer" EntitySet="Customer" />
-            <End Role="Orders" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Points_Customer" Association="I_ChiModel.FK_Points_Customer">
-            <End Role="Customer" EntitySet="Customer" />
-            <End Role="Points" EntitySet="Points" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Users_Customer" Association="I_ChiModel.FK_Users_Customer">
-            <End Role="Customer" EntitySet="Customer" />
-            <End Role="Users" EntitySet="Users" />
-          </AssociationSet>
           <AssociationSet Name="FK_OrderDetail_Orders" Association="I_ChiModel.FK_OrderDetail_Orders">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="OrderDetail" EntitySet="OrderDetail" />
@@ -302,36 +316,26 @@
             <End Role="Product" EntitySet="Product" />
             <End Role="Purchase" EntitySet="Purchase" />
           </AssociationSet>
-        </EntityContainer>
-        <EntityType Name="Customer">
-          <Key>
-            <PropertyRef Name="c_Id" />
-          </Key>
-          <Property Name="c_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="c_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="c_Gender" Type="Boolean" />
-          <Property Name="c_Birthday" Type="DateTime" Precision="3" />
-          <Property Name="c_IdCard" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="c_LineId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="c_EMail" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="c_Nationality" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
-          <Property Name="c_PostalCode" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="c_City" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="c_Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="c_CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="c_Memo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="c_TaxId" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
-          <Property Name="c_Company" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="c_Phone1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="c_Phone1_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="c_Phone2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="c_Phone2_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="c_Phone3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="c_Phone3_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Orders" Relationship="I_ChiModel.FK_Orders_Customer" FromRole="Customer" ToRole="Orders" />
-          <NavigationProperty Name="Points" Relationship="I_ChiModel.FK_Points_Customer" FromRole="Customer" ToRole="Points" />
-          <NavigationProperty Name="Users" Relationship="I_ChiModel.FK_Users_Customer" FromRole="Customer" ToRole="Users" />
-        </EntityType>
+          <EntitySet Name="Points" EntityType="I_ChiModel.Points" />
+          <AssociationSet Name="FK_Points_Orders" Association="I_ChiModel.FK_Points_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Points" EntitySet="Points" />
+          </AssociationSet>
+          <EntitySet Name="PointSet" EntityType="I_ChiModel.PointSet" />
+          <EntitySet Name="Customer" EntityType="I_ChiModel.Customer" />
+          <AssociationSet Name="FK_Orders_Customer" Association="I_ChiModel.FK_Orders_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Points_Customer" Association="I_ChiModel.FK_Points_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Points" EntitySet="Points" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Customer" Association="I_ChiModel.FK_Users_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="OrderDetail">
           <Key>
             <PropertyRef Name="od_Id" />
@@ -358,19 +362,9 @@
           <Property Name="o_IsCollectPayment" Type="Boolean" />
           <Property Name="o_IsInstallment" Type="Boolean" />
           <Property Name="o_CreateDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Customer" Relationship="I_ChiModel.FK_Orders_Customer" FromRole="Orders" ToRole="Customer" />
           <NavigationProperty Name="OrderDetail" Relationship="I_ChiModel.FK_OrderDetail_Orders" FromRole="Orders" ToRole="OrderDetail" />
-        </EntityType>
-        <EntityType Name="Points">
-          <Key>
-            <PropertyRef Name="po_Id" />
-          </Key>
-          <Property Name="po_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="po_c_Id" Type="Int32" />
-          <Property Name="po_Quantity" Type="Int32" />
-          <Property Name="po_SentDate" Type="DateTime" Precision="3" />
-          <Property Name="po_DueDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Customer" Relationship="I_ChiModel.FK_Points_Customer" FromRole="Points" ToRole="Customer" />
+          <NavigationProperty Name="Points" Relationship="I_ChiModel.FK_Points_Orders" FromRole="Orders" ToRole="Points" />
+          <NavigationProperty Name="Customer" Relationship="I_ChiModel.FK_Orders_Customer" FromRole="Orders" ToRole="Customer" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -389,6 +383,7 @@
           <NavigationProperty Name="OrderDetail" Relationship="I_ChiModel.FK_OrderDetail_Product" FromRole="Product" ToRole="OrderDetail" />
           <NavigationProperty Name="Supplier" Relationship="I_ChiModel.FK_Product_Supplier" FromRole="Product" ToRole="Supplier" />
           <NavigationProperty Name="Purchase" Relationship="I_ChiModel.FK_Purchase_Product" FromRole="Product" ToRole="Purchase" />
+          <Property Name="p_No" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Purchase">
           <Key>
@@ -449,42 +444,6 @@
           <Property Name="a_c_Id" Type="Int32" />
           <NavigationProperty Name="Customer" Relationship="I_ChiModel.FK_Users_Customer" FromRole="Users" ToRole="Customer" />
         </EntityType>
-        <Association Name="FK_Orders_Customer">
-          <End Type="I_ChiModel.Customer" Role="Customer" Multiplicity="0..1" />
-          <End Type="I_ChiModel.Orders" Role="Orders" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="c_Id" />
-            </Principal>
-            <Dependent Role="Orders">
-              <PropertyRef Name="o_c_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Points_Customer">
-          <End Type="I_ChiModel.Customer" Role="Customer" Multiplicity="0..1" />
-          <End Type="I_ChiModel.Points" Role="Points" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="c_Id" />
-            </Principal>
-            <Dependent Role="Points">
-              <PropertyRef Name="po_c_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Users_Customer">
-          <End Type="I_ChiModel.Customer" Role="Customer" Multiplicity="0..1" />
-          <End Type="I_ChiModel.Users" Role="Users" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="c_Id" />
-            </Principal>
-            <Dependent Role="Users">
-              <PropertyRef Name="a_c_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_OrderDetail_Orders">
           <End Type="I_ChiModel.Orders" Role="Orders" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -535,39 +494,111 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Points">
+          <Key>
+            <PropertyRef Name="po_Id" />
+          </Key>
+          <Property Name="po_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="po_c_Id" Type="Int32" />
+          <Property Name="po_o_Id" Type="Int32" />
+          <Property Name="po_Quantity" Type="Int32" />
+          <Property Name="po_SentDate" Type="DateTime" Precision="3" />
+          <Property Name="po_DueDate" Type="DateTime" Precision="3" />
+          <Property Name="po_State" Type="Boolean" />
+          <NavigationProperty Name="Orders" Relationship="I_ChiModel.FK_Points_Orders" FromRole="Points" ToRole="Orders" />
+          <Property Name="po_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Customer" Relationship="I_ChiModel.FK_Points_Customer" FromRole="Points" ToRole="Customer" />
+        </EntityType>
+        <Association Name="FK_Points_Orders">
+          <End Type="I_ChiModel.Orders" Role="Orders" Multiplicity="0..1" />
+          <End Type="I_ChiModel.Points" Role="Points" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="o_Id" />
+            </Principal>
+            <Dependent Role="Points">
+              <PropertyRef Name="po_o_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PointSet">
+          <Key>
+            <PropertyRef Name="ps_Id" />
+          </Key>
+          <Property Name="ps_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ps_Multiple" Type="Double" Nullable="false" />
+          <Property Name="ps_Validity" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="c_Id" />
+          </Key>
+          <Property Name="c_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="c_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="c_Gender" Type="Boolean" />
+          <Property Name="c_Birthday" Type="DateTime" Precision="3" />
+          <Property Name="c_IdCard" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="c_EMail" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="c_PostalCode" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="c_City" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="c_Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="c_CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="c_Memo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="c_TaxId" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="c_Company" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="c_Phone1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="c_Phone2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="c_Phone2_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="c_No" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="c_Area" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="c_CarFrameNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="c_LicensePlate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Orders" Relationship="I_ChiModel.FK_Orders_Customer" FromRole="Customer" ToRole="Orders" />
+          <NavigationProperty Name="Points" Relationship="I_ChiModel.FK_Points_Customer" FromRole="Customer" ToRole="Points" />
+          <NavigationProperty Name="Users" Relationship="I_ChiModel.FK_Users_Customer" FromRole="Customer" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK_Orders_Customer">
+          <End Type="I_ChiModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="I_ChiModel.Orders" Role="Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="c_Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="o_c_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Points_Customer">
+          <End Type="I_ChiModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="I_ChiModel.Points" Role="Points" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="c_Id" />
+            </Principal>
+            <Dependent Role="Points">
+              <PropertyRef Name="po_c_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Customer">
+          <End Type="I_ChiModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="I_ChiModel.Users" Role="Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="c_Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="a_c_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="I_ChiModelStoreContainer" CdmEntityContainer="I_ChiEntities">
-          <EntitySetMapping Name="Customer">
-            <EntityTypeMapping TypeName="I_ChiModel.Customer">
-              <MappingFragment StoreEntitySet="Customer">
-                <ScalarProperty Name="c_Phone3_Type" ColumnName="c_Phone3_Type" />
-                <ScalarProperty Name="c_Phone3" ColumnName="c_Phone3" />
-                <ScalarProperty Name="c_Phone2_Type" ColumnName="c_Phone2_Type" />
-                <ScalarProperty Name="c_Phone2" ColumnName="c_Phone2" />
-                <ScalarProperty Name="c_Phone1_Type" ColumnName="c_Phone1_Type" />
-                <ScalarProperty Name="c_Phone1" ColumnName="c_Phone1" />
-                <ScalarProperty Name="c_Company" ColumnName="c_Company" />
-                <ScalarProperty Name="c_TaxId" ColumnName="c_TaxId" />
-                <ScalarProperty Name="c_Memo" ColumnName="c_Memo" />
-                <ScalarProperty Name="c_CreateDate" ColumnName="c_CreateDate" />
-                <ScalarProperty Name="c_Address" ColumnName="c_Address" />
-                <ScalarProperty Name="c_City" ColumnName="c_City" />
-                <ScalarProperty Name="c_PostalCode" ColumnName="c_PostalCode" />
-                <ScalarProperty Name="c_Nationality" ColumnName="c_Nationality" />
-                <ScalarProperty Name="c_EMail" ColumnName="c_EMail" />
-                <ScalarProperty Name="c_LineId" ColumnName="c_LineId" />
-                <ScalarProperty Name="c_IdCard" ColumnName="c_IdCard" />
-                <ScalarProperty Name="c_Birthday" ColumnName="c_Birthday" />
-                <ScalarProperty Name="c_Gender" ColumnName="c_Gender" />
-                <ScalarProperty Name="c_Name" ColumnName="c_Name" />
-                <ScalarProperty Name="c_Id" ColumnName="c_Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="OrderDetail">
             <EntityTypeMapping TypeName="I_ChiModel.OrderDetail">
               <MappingFragment StoreEntitySet="OrderDetail">
@@ -595,20 +626,10 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Points">
-            <EntityTypeMapping TypeName="I_ChiModel.Points">
-              <MappingFragment StoreEntitySet="Points">
-                <ScalarProperty Name="po_DueDate" ColumnName="po_DueDate" />
-                <ScalarProperty Name="po_SentDate" ColumnName="po_SentDate" />
-                <ScalarProperty Name="po_Quantity" ColumnName="po_Quantity" />
-                <ScalarProperty Name="po_c_Id" ColumnName="po_c_Id" />
-                <ScalarProperty Name="po_Id" ColumnName="po_Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Product">
             <EntityTypeMapping TypeName="I_ChiModel.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="p_No" ColumnName="p_No" />
                 <ScalarProperty Name="p_CreateDate" ColumnName="p_CreateDate" />
                 <ScalarProperty Name="p_s_Id" ColumnName="p_s_Id" />
                 <ScalarProperty Name="p_Price" ColumnName="p_Price" />
@@ -678,6 +699,55 @@
                 <ScalarProperty Name="a_UserName" ColumnName="a_UserName" />
                 <ScalarProperty Name="a_Type" ColumnName="a_Type" />
                 <ScalarProperty Name="a_Id" ColumnName="a_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Points">
+            <EntityTypeMapping TypeName="I_ChiModel.Points">
+              <MappingFragment StoreEntitySet="Points">
+                <ScalarProperty Name="po_Type" ColumnName="po_Type" />
+                <ScalarProperty Name="po_State" ColumnName="po_State" />
+                <ScalarProperty Name="po_DueDate" ColumnName="po_DueDate" />
+                <ScalarProperty Name="po_SentDate" ColumnName="po_SentDate" />
+                <ScalarProperty Name="po_Quantity" ColumnName="po_Quantity" />
+                <ScalarProperty Name="po_o_Id" ColumnName="po_o_Id" />
+                <ScalarProperty Name="po_c_Id" ColumnName="po_c_Id" />
+                <ScalarProperty Name="po_Id" ColumnName="po_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PointSet">
+            <EntityTypeMapping TypeName="I_ChiModel.PointSet">
+              <MappingFragment StoreEntitySet="PointSet">
+                <ScalarProperty Name="ps_Validity" ColumnName="ps_Validity" />
+                <ScalarProperty Name="ps_Multiple" ColumnName="ps_Multiple" />
+                <ScalarProperty Name="ps_Id" ColumnName="ps_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customer">
+            <EntityTypeMapping TypeName="I_ChiModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="c_LicensePlate" ColumnName="c_LicensePlate" />
+                <ScalarProperty Name="c_CarFrameNo" ColumnName="c_CarFrameNo" />
+                <ScalarProperty Name="c_Area" ColumnName="c_Area" />
+                <ScalarProperty Name="c_No" ColumnName="c_No" />
+                <ScalarProperty Name="c_Phone2_Type" ColumnName="c_Phone2_Type" />
+                <ScalarProperty Name="c_Phone2" ColumnName="c_Phone2" />
+                <ScalarProperty Name="c_Phone1" ColumnName="c_Phone1" />
+                <ScalarProperty Name="c_Company" ColumnName="c_Company" />
+                <ScalarProperty Name="c_TaxId" ColumnName="c_TaxId" />
+                <ScalarProperty Name="c_Memo" ColumnName="c_Memo" />
+                <ScalarProperty Name="c_CreateDate" ColumnName="c_CreateDate" />
+                <ScalarProperty Name="c_Address" ColumnName="c_Address" />
+                <ScalarProperty Name="c_City" ColumnName="c_City" />
+                <ScalarProperty Name="c_PostalCode" ColumnName="c_PostalCode" />
+                <ScalarProperty Name="c_EMail" ColumnName="c_EMail" />
+                <ScalarProperty Name="c_IdCard" ColumnName="c_IdCard" />
+                <ScalarProperty Name="c_Birthday" ColumnName="c_Birthday" />
+                <ScalarProperty Name="c_Gender" ColumnName="c_Gender" />
+                <ScalarProperty Name="c_Name" ColumnName="c_Name" />
+                <ScalarProperty Name="c_Id" ColumnName="c_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

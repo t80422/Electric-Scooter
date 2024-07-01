@@ -11055,6 +11055,7 @@ body {
     background-image: url('../image/logo.png');
     background-repeat: no-repeat;
     background-position: 50% 50%;
+    background-size: contain;
 }
 
     .logo-wrap a {

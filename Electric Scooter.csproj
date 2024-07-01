@@ -216,14 +216,16 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\PointController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\PurchaseController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Helpers\CityHelper.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Helpers\HtmlExtensions.cs" />
+    <Compile Include="Helpers\IsLogin.cs" />
     <Compile Include="Helpers\PDFHelper.cs" />
     <Compile Include="Models\Customer.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -252,8 +254,11 @@
     <Compile Include="Models\Orders.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\OrderVM.cs" />
+    <Compile Include="ViewModels\OrderVM.cs" />
     <Compile Include="Models\Points.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PointSet.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Product.cs">
@@ -270,11 +275,14 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Repositories\IOrderDetail.cs" />
+    <Compile Include="Repositories\IPointRep.cs" />
     <Compile Include="Repositories\IProductRep.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\OrderDetailRep.cs" />
+    <Compile Include="Repositories\PointRep.cs" />
     <Compile Include="Repositories\ProductRep.cs" />
     <Compile Include="Repositories\Repository.cs" />
+    <Compile Include="ViewModels\LoginVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -286,14 +294,22 @@
     <Content Include="Content\css\fontawesome\regular.css" />
     <Content Include="Content\css\fontawesome\solid.css" />
     <Content Include="Content\css\fontawesome\v4-shims.css" />
+    <Content Include="Content\css\login1.css" />
+    <Content Include="Content\css\login2.css" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\css\tempStyle.css" />
+    <Content Include="Content\fonts\fa-brands-400.svg" />
+    <Content Include="Content\fonts\fa-regular-400.svg" />
+    <Content Include="Content\fonts\fa-solid-900.svg" />
+    <Content Include="Content\image\account_icon.png" />
+    <Content Include="Content\image\bg.png" />
     <Content Include="Content\image\favico.ico" />
     <Content Include="Content\image\logo.png" />
     <Content Include="Content\image\nav_btn_l.png" />
     <Content Include="Content\image\nav_btn_r.png" />
     <Content Include="Content\image\nav_icon.png" />
     <Content Include="Content\image\nav_icon_member.png" />
+    <Content Include="Content\image\password_icon.png" />
     <Content Include="Content\js\jquery-2.1.4.min.js" />
     <Content Include="Content\js\script.js" />
     <Content Include="Content\js\scroll-animation.js" />
@@ -360,6 +376,19 @@
     <Content Include="Content\scss\style.scss" />
     <Content Include="libman.json" />
     <Content Include="fonts\msjh.ttc" />
+    <Content Include="Content\fonts\fa-brands-400.eot" />
+    <Content Include="Content\fonts\fa-brands-400.ttf" />
+    <Content Include="Content\fonts\fa-brands-400.woff" />
+    <Content Include="Content\fonts\fa-brands-400.woff2" />
+    <Content Include="Content\fonts\fa-regular-400.eot" />
+    <Content Include="Content\fonts\fa-regular-400.ttf" />
+    <Content Include="Content\fonts\fa-regular-400.woff" />
+    <Content Include="Content\fonts\fa-regular-400.woff2" />
+    <Content Include="Content\fonts\fa-solid-900.eot" />
+    <Content Include="Content\fonts\fa-solid-900.ttf" />
+    <Content Include="Content\fonts\fa-solid-900.woff" />
+    <Content Include="Content\fonts\fa-solid-900.woff2" />
+    <Content Include="Content\fonts\Poppins-ExtraBold.ttf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\input-validation.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -422,6 +451,16 @@
     <Content Include="Views\Order\ExportTOPDFView.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\Order\Form.cshtml" />
+    <Content Include="Views\Point\Create.cshtml" />
+    <Content Include="Views\Point\Details.cshtml" />
+    <Content Include="Views\Point\Edit.cshtml" />
+    <Content Include="Views\Point\ExportTOPDFView.cshtml" />
+    <Content Include="Views\Point\Form.cshtml" />
+    <Content Include="Views\Point\Index.cshtml" />
+    <Content Include="Views\Point\Setting.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Order\ExportTOPDFView - 複製.cshtml" />
+    <Content Include="Views\Customer\Index - 複製.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

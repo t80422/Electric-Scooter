@@ -1,0 +1,172 @@
+﻿@model IEnumerable<Electric_Scooter.Models.Points>
+@{
+    string GetSortableLink(string sortField)
+    {
+        var sortOrder = ViewBag.SortField == sortField && ViewBag.SortOrder == "asc" ? "desc" : "asc";
+        return Url.Action("Index", new
+        {
+            sortField = sortField,
+            sortOrder = sortOrder,
+            searchTerm = Request.QueryString["searchTerm"]
+        });
+    }
+}
+<main class="container-wrap">
+    <div class="container-main">
+        <!-- breadcrumb -->
+        <section class="breadcrumb-wrap">
+            <ul>
+                <li>
+                    <a href="">首頁</a>
+                </li>
+                <li>
+                    <p>會員點數管理</p>
+                </li>
+            </ul>
+        </section>
+        <!-- tool -->
+        @using (Html.BeginForm("Index", "Point", FormMethod.Get))
+        {
+            <section class="tool-wrap">
+                <div class="filter-date">
+                    <label>發送日</label>
+                    <div>
+                        <input type="date" name="sendStart" value="@Request.QueryString["sendStart"]">
+                    </div>
+                    <span></span>
+                    <div>
+                        <input type="date" name="sentEnd" value="@Request.QueryString["sentEnd"]">
+                    </div>
+                </div>
+
+                <div class="filter-date">
+                    <label>到期日</label>
+                    <div>
+                        <input type="date" name="dueStart" value="@Request.QueryString["dueStart"]">
+                    </div>
+                    <span></span>
+                    <div>
+                        <input type="date" name="dueEnd" value="@Request.QueryString["dueEnd"]">
+                    </div>
+                </div>
+
+                <div class="filter-select">
+                    <label>狀態</label>
+                    <select name="state">
+                        <option value="">請選擇</option>
+                        <option value="true" @(Request.QueryString["state"] == "有效" ? "selected" : "")>有效</option>
+                        <option value="false" @(Request.QueryString["state"] == "失效" ? "selected" : "")>失效</option>
+                    </select>
+                </div>
+
+                <div class="filter-select">
+                    <label>分類</label>
+                    <select name="type">
+                        <option value="">請選擇</option>
+                        <option value="購買" @(Request.QueryString["type"] == "購買" ? "selected" : "")>購買</option>
+                        <option value="維修" @(Request.QueryString["type"] == "維修" ? "selected" : "")>維修</option>
+                        <option value="保養" @(Request.QueryString["type"] == "保養" ? "selected" : "")>保養</option>
+                    </select>
+                </div>
+
+                <div class="tool-btn">
+                    <button type="button" class="btn-add" onclick="location='@Url.Action("Create")'"><span>新增一筆</span></button>
+                    <button type="button" class="btn-primary" onclick="location='@Url.Action("Setting")'"><span>設定</span></button>
+                    <button type="button" class="btn-export" onclick="print('@Url.Action("Print")')"><span>列印</span></button>
+                    <button type="button" class="btn-export" onclick="location='@Url.Action("ExportToPDF")'"><span>匯出</span></button>
+                </div>
+            </section>
+
+            <section class="tool-wrap">
+                <div class="filter-date">
+                    <label>會員加入日期</label>
+                    <div>
+                        <input type="date" name="cusInDateStart" value="@Request.QueryString["cusInDateStart"]">
+                    </div>
+                    <span></span>
+                    <div>
+                        <input type="date" name="cusInDateEnd" value="@Request.QueryString["cusInDateEnd"]">
+                    </div>
+                </div>
+
+                <div class="filter-bottom">
+                    <button type="submit" class="btn-filter-submit">確定</button>
+                    <a href="@Url.Action("Index")" class="btn-filter-clean">清除條件</a>
+                </div>
+
+                <div class="tool-search">
+                    <div class="ts-box">
+                        <input type="text" name="searchTerm" placeholder="請輸入關鍵字搜尋" value="@Request.QueryString["searchTerm"]">
+                        <button type="submit" class="btn-search"></button>
+                    </div>
+                </div>
+            </section>
+        }
+        <!-- list -->
+        <section class="list-wrap">
+            <div class="list-overflow">
+                <div class="list-main">
+                    <div class="list-title">
+                        <div class="f-1">客戶</div>
+                        <div class="f-1">電話</div>
+                        <div class="f-1">訂單編號</div>
+                        <div class="f-1">
+                            <a href="@GetSortableLink("Point")">點數</a>
+                        </div>
+                        <div class="f-1">
+                            <a href="@GetSortableLink("SendDate")">發送日</a>
+                        </div>
+                        <div class="f-1">
+                            <a href="@GetSortableLink("DueDate")">到期日</a>
+                        </div>
+                        <div class="f-1">狀態</div>
+                        <div class="f-1">
+                            <a href="@GetSortableLink("Type")">分類</a>
+                        </div>
+                        <div class="f-1">會員加入日期</div>
+                        <div class="f-1">操作</div>
+                    </div>
+
+                    <div class="list-list">
+                        @if (Model != null)
+                        {
+                            foreach (var data in Model)
+                            {
+                                <div class="list-row" onclick="location.href='@Url.Action("Details", "Point", new { id = data.po_Id })'" style="cursor: pointer;">
+                                    <div class="f-1">@data.Customer.c_Name</div>
+                                    <div class="f-1">@data.Customer.c_Phone1</div>
+                                    <div class="f-1">@(data.Orders?.o_No)</div>
+                                    <div class="f-1">@data.po_Quantity</div>
+                                    <div class="f-1">@data.po_SentDate.Value.ToString("yyyy-MM-dd")</div>
+                                    <div class="f-1">@data.po_DueDate.Value.ToString("yyyy-MM-dd")</div>
+                                    <div class="f-1">
+                                        <input type="checkbox" disabled @(data.po_State.Value ? "checked" : "") />
+                                    </div>
+                                    <div class="f-1">@data.po_Type</div>
+                                    <div class="f-1">@(data.Customer.c_CreateDate.Value.ToString("yyyy-MM-dd"))</div>
+                                    <div class="f-1" onclick="event.stopPropagation();">
+                                        @Html.ActionLink(" ", "Edit", new { id = data.po_Id }, new { @class = "fa-solid fa-pen-to-square", style = "margin-right: 10px;", title = "修改" })
+
+                                        <form action="@Url.Action("Delete", "Point", new { id = data.po_Id})" method="post" style="display: inline;">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="fa-solid fa-trash" onclick="return confirm('確定要刪除這個項目嗎？')" style="border: none; background: none;" title="刪除"></button>
+                                        </form>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- pages -->
+        <div class="pages-wrap">
+            <button class="btn-prev"></button>
+            <button class="btn-next"></button>
+            @if (Model != null)
+            {
+                <span>showing @Model.Count() of @Model.Count()</span>
+            }
+        </div>
+    </div>
+</main>

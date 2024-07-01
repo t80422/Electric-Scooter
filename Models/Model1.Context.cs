@@ -25,13 +25,14 @@ namespace Electric_Scooter.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Customer> Customer { get; set; }
         public virtual DbSet<OrderDetail> OrderDetail { get; set; }
         public virtual DbSet<Orders> Orders { get; set; }
-        public virtual DbSet<Points> Points { get; set; }
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<Purchase> Purchase { get; set; }
         public virtual DbSet<Supplier> Supplier { get; set; }
         public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<Points> Points { get; set; }
+        public virtual DbSet<PointSet> PointSet { get; set; }
+        public virtual DbSet<Customer> Customer { get; set; }
     }
 }

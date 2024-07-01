@@ -29,34 +29,32 @@
         @using (Html.BeginForm("Index", "Purchase", FormMethod.Get))
         {
             <section class="tool-wrap">
-                <div class="tool-flex">
-                    <div class="tool-search">
-                        <div class="ts-box">
-                            <input type="text" name="searchTerm" placeholder="請輸入關鍵字搜尋" value="@Request.QueryString["searchTerm"]">
-                            <button type="submit" class="btn-search"></button>
-                        </div>
+                <div class="tool-search">
+                    <div class="ts-box">
+                        <input type="text" name="searchTerm" placeholder="請輸入關鍵字搜尋" value="@Request.QueryString["searchTerm"]">
+                        <button type="submit" class="btn-search"></button>
                     </div>
+                </div>
 
-                    <div class="filter-date">
-                        <label>入庫日期</label>
-                        <div>
-                            <input type="date" name="stkInStart" value="@Request.QueryString["stkInStart"]">
-                        </div>
-                        <span></span>
-                        <div>
-                            <input type="date" name="stkInEnd" value="@Request.QueryString["stkInEnd"]">
-                        </div>
+                <div class="filter-date">
+                    <label>入庫日期</label>
+                    <div>
+                        <input type="date" name="stkInStart" value="@Request.QueryString["stkInStart"]">
                     </div>
+                    <span></span>
+                    <div>
+                        <input type="date" name="stkInEnd" value="@Request.QueryString["stkInEnd"]">
+                    </div>
+                </div>
 
-                    <div class="filter-date">
-                        <label>出庫日期</label>
-                        <div>
-                            <input type="date" name="stkOutStart" value="@Request.QueryString["stkOutStart"]">
-                        </div>
-                        <span></span>
-                        <div>
-                            <input type="date" name="stkOutEnd" value="@Request.QueryString["stkOutEnd"]">
-                        </div>
+                <div class="filter-date">
+                    <label>出庫日期</label>
+                    <div>
+                        <input type="date" name="stkOutStart" value="@Request.QueryString["stkOutStart"]">
+                    </div>
+                    <span></span>
+                    <div>
+                        <input type="date" name="stkOutEnd" value="@Request.QueryString["stkOutEnd"]">
                     </div>
                 </div>
                 <div class="tool-btn">
@@ -67,48 +65,46 @@
             </section>
 
             <section class="tool-wrap">
-                <div class="tool-flex">
-                    <div class="filter-select">
-                        <label>分類</label>
-                        <select name="type">
-                            <option value="">請選擇</option>
-                            <option value="車輛A01" @(Request.QueryString["type"] == "車輛A01" ? "selected" : "")>車輛A01</option>
-                            <option value="電池B01" @(Request.QueryString["type"] == "電池B01" ? "selected" : "")>電池B01</option>
-                            <option value="零件C01" @(Request.QueryString["type"] == "零件C01" ? "selected" : "")>零件C01</option>
-                        </select>
-                    </div>
+                <div class="filter-select">
+                    <label>分類</label>
+                    <select name="type">
+                        <option value="">請選擇</option>
+                        <option value="車輛A01" @(Request.QueryString["type"] == "車輛A01" ? "selected" : "")>車輛A01</option>
+                        <option value="電池B01" @(Request.QueryString["type"] == "電池B01" ? "selected" : "")>電池B01</option>
+                        <option value="零件C01" @(Request.QueryString["type"] == "零件C01" ? "selected" : "")>零件C01</option>
+                    </select>
+                </div>
 
-                    <div class="filter-select">
-                        <label>結清</label>
-                        <select name="Settled">
-                            <option value="">請選擇</option>
-                            <option value="true" @(Request.QueryString["settled"] == "true" ? "selected" : "")>是</option>
-                            <option value="false" @(Request.QueryString["settled"] == "false" ? "selected" : "")>否</option>
-                        </select>
-                    </div>
+                <div class="filter-select">
+                    <label>結清</label>
+                    <select name="Settled">
+                        <option value="">請選擇</option>
+                        <option value="true" @(Request.QueryString["settled"] == "true" ? "selected" : "")>是</option>
+                        <option value="false" @(Request.QueryString["settled"] == "false" ? "selected" : "")>否</option>
+                    </select>
+                </div>
 
-                    <div class="filter-select">
-                        <label>收款</label>
-                        <select name="PaymentReceived">
-                            <option value="">請選擇</option>
-                            <option value="true" @(Request.QueryString["paymentReceived"] == "true" ? "selected" : "")>是</option>
-                            <option value="false" @(Request.QueryString["paymentReceived"] == "false" ? "selected" : "")>否</option>
-                        </select>
-                    </div>
+                <div class="filter-select">
+                    <label>收款</label>
+                    <select name="PaymentReceived">
+                        <option value="">請選擇</option>
+                        <option value="true" @(Request.QueryString["paymentReceived"] == "true" ? "selected" : "")>是</option>
+                        <option value="false" @(Request.QueryString["paymentReceived"] == "false" ? "selected" : "")>否</option>
+                    </select>
+                </div>
 
-                    <div class="filter-select">
-                        <label>分期</label>
-                        <select name="Installment">
-                            <option value="">請選擇</option>
-                            <option value="true" @(Request.QueryString["installment"] == "true" ? "selected" : "")>是</option>
-                            <option value="false" @(Request.QueryString["installment"] == "false" ? "selected" : "")>否</option>
-                        </select>
-                    </div>
+                <div class="filter-select">
+                    <label>分期</label>
+                    <select name="Installment">
+                        <option value="">請選擇</option>
+                        <option value="true" @(Request.QueryString["installment"] == "true" ? "selected" : "")>是</option>
+                        <option value="false" @(Request.QueryString["installment"] == "false" ? "selected" : "")>否</option>
+                    </select>
+                </div>
 
-                    <div class="filter-bottom">
-                        <button type="submit" class="btn-filter-submit">確定</button>
-                        <a href="@Url.Action("Index")" class="btn-filter-clean">清除條件</a>
-                    </div>
+                <div class="filter-bottom">
+                    <button type="submit" class="btn-filter-submit">確定</button>
+                    <a href="@Url.Action("Index")" class="btn-filter-clean">清除條件</a>
                 </div>
             </section>
         }

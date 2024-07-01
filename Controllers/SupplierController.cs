@@ -14,6 +14,7 @@ using Electric_Scooter.Helpers;
 
 namespace Electric_Scooter.Controllers
 {
+    [IsLogin]
     public class SupplierController : Controller
     {
         // GET: Supplier

@@ -30,28 +30,26 @@
         @using (Html.BeginForm("Index", "Supplier", FormMethod.Get))
         {
             <section class="tool-wrap">
-                <div class="tool-flex">
-                    <div class="filter-select">
-                        <label>縣市</label>
-                        <select name="city">
-                            <option value="" disabled selected>請選擇</option>
-                            @foreach (var city in CityHelper.GetCities())
-                            {
-                                <option value="@city" @(Request.QueryString["city"] == city ? "selected" : "")>@city</option>
-                            }
-                        </select>
-                    </div>
+                <div class="filter-select">
+                    <label>縣市</label>
+                    <select name="city">
+                        <option value="" disabled selected>請選擇</option>
+                        @foreach (var city in CityHelper.GetCities())
+                        {
+                            <option value="@city" @(Request.QueryString["city"] == city ? "selected" : "")>@city</option>
+                        }
+                    </select>
+                </div>
 
-                    <div class="filter-bottom">
-                        <button type="submit" class="btn-filter-submit">確定</button>
-                        <a href="@Url.Action("Index", "Supplier")" class="btn-filter-clean">清除條件</a>
-                    </div>
+                <div class="filter-bottom">
+                    <button type="submit" class="btn-filter-submit">確定</button>
+                    <a href="@Url.Action("Index", "Supplier")" class="btn-filter-clean">清除條件</a>
+                </div>
 
-                    <div class="tool-search">
-                        <div class="ts-box">
-                            <input type="text" name="searchTerm" placeholder="請輸入關鍵字搜尋" value="@Request.QueryString["searchTerm"]">
-                            <button type="submit" class="btn-search"></button>
-                        </div>
+                <div class="tool-search">
+                    <div class="ts-box">
+                        <input type="text" name="searchTerm" placeholder="請輸入關鍵字搜尋" value="@Request.QueryString["searchTerm"]">
+                        <button type="submit" class="btn-search"></button>
                     </div>
                 </div>
 

@@ -613,7 +613,9 @@ body {
 }
 
 // list
-.list-wrap {}
+.list-wrap {
+    position:relative;
+}
 
 .list-overflow {
     overflow-x: auto;
@@ -624,6 +626,12 @@ body {
     @include MQ(d1024) {
         min-width: 1150px;
     }
+}
+
+.list-content{
+    height:calc(100vh-180px);
+    overflow-x:hidden;
+    overflow-y:auto;
 }
 
 .list-title,

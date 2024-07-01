@@ -27,9 +27,7 @@ namespace Electric_Scooter.Models
         public Nullable<bool> c_Gender { get; set; }
         public Nullable<System.DateTime> c_Birthday { get; set; }
         public string c_IdCard { get; set; }
-        public string c_LineId { get; set; }
         public string c_EMail { get; set; }
-        public string c_Nationality { get; set; }
         public string c_PostalCode { get; set; }
         public string c_City { get; set; }
         public string c_Address { get; set; }
@@ -38,11 +36,12 @@ namespace Electric_Scooter.Models
         public string c_TaxId { get; set; }
         public string c_Company { get; set; }
         public string c_Phone1 { get; set; }
-        public string c_Phone1_Type { get; set; }
         public string c_Phone2 { get; set; }
         public string c_Phone2_Type { get; set; }
-        public string c_Phone3 { get; set; }
-        public string c_Phone3_Type { get; set; }
+        public string c_No { get; set; }
+        public string c_Area { get; set; }
+        public string c_CarFrameNo { get; set; }
+        public string c_LicensePlate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Orders> Orders { get; set; }

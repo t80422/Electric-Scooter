@@ -16,10 +16,14 @@ namespace Electric_Scooter.Models
     {
         public int po_Id { get; set; }
         public Nullable<int> po_c_Id { get; set; }
+        public Nullable<int> po_o_Id { get; set; }
         public Nullable<int> po_Quantity { get; set; }
         public Nullable<System.DateTime> po_SentDate { get; set; }
         public Nullable<System.DateTime> po_DueDate { get; set; }
+        public Nullable<bool> po_State { get; set; }
+        public string po_Type { get; set; }
     
+        public virtual Orders Orders { get; set; }
         public virtual Customer Customer { get; set; }
     }
 }

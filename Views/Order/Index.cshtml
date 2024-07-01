@@ -29,37 +29,35 @@
         @using (Html.BeginForm("Index", "Order", FormMethod.Get))
         {
             <section class="tool-wrap">
-                <div class="tool-flex">
-                    <div class="filter-select">
-                        <label>訂單狀態</label>
-                        <select name="state">
-                            <option value="">請選擇</option>
-                            <option value="完售" @(Request.QueryString["state"] == "完售" ? "selected" : "")>完售</option>
-                            <option value="預定" @(Request.QueryString["state"] == "預定" ? "selected" : "")>預定</option>
-                        </select>
-                    </div>
+                <div class="filter-select">
+                    <label>訂單狀態</label>
+                    <select name="state">
+                        <option value="">請選擇</option>
+                        <option value="完售" @(Request.QueryString["state"] == "完售" ? "selected" : "")>完售</option>
+                        <option value="預定" @(Request.QueryString["state"] == "預定" ? "selected" : "")>預定</option>
+                    </select>
+                </div>
 
-                    <div class="filter-date">
-                        <label>訂單日期</label>
-                        <div>
-                            <input type="date" name="startDate" value="@Request.QueryString["startDate"]">
-                        </div>
-                        <span></span>
-                        <div>
-                            <input type="date" name="endDate" value="@Request.QueryString["endDate"]">
-                        </div>
+                <div class="filter-date">
+                    <label>訂單日期</label>
+                    <div>
+                        <input type="date" name="startDate" value="@Request.QueryString["startDate"]">
                     </div>
-
-                    <div class="filter-bottom">
-                        <button type="submit" class="btn-filter-submit">確定</button>
-                        <a href="@Url.Action("Index")" class="btn-filter-clean">清除條件</a>
+                    <span></span>
+                    <div>
+                        <input type="date" name="endDate" value="@Request.QueryString["endDate"]">
                     </div>
+                </div>
 
-                    <div class="tool-search">
-                        <div class="ts-box">
-                            <input type="text" name="searchTerm" placeholder="請輸入關鍵字搜尋" value="@Request.QueryString["searchTerm"]">
-                            <button type="submit" class="btn-search"></button>
-                        </div>
+                <div class="filter-bottom">
+                    <button type="submit" class="btn-filter-submit">確定</button>
+                    <a href="@Url.Action("Index")" class="btn-filter-clean">清除條件</a>
+                </div>
+
+                <div class="tool-search">
+                    <div class="ts-box">
+                        <input type="text" name="searchTerm" placeholder="請輸入關鍵字搜尋" value="@Request.QueryString["searchTerm"]">
+                        <button type="submit" class="btn-search"></button>
                     </div>
                 </div>
 

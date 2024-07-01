@@ -9,121 +9,118 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order List</title>
     <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            table-layout: fixed; /* 防止超出頁面 */
-            margin-bottom: 20px;
-            font-size: 10px;
+        body {
+            font-family: Arial,sans-serif;
         }
 
-        th, td {
-            border: none; /* 移除內部詳細信息表格的邊框線 */
-            padding: 6px;
-            text-align: left;
-            word-wrap: break-word; /* 防止文字超出表格 */
-        }
-
-        th {
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .header {
+        .invoice-header, .invoice-footer {
             text-align: center;
             margin-bottom: 10px;
         }
 
-        .footer {
+            .invoice-header h2, .invoice-footer p {
+                margin: 0;
+            }
+
+        .invoice-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+            .invoice-info div {
+                width: 45%;
+            }
+
+                .invoice-info div p {
+                    margin: 2px 0;
+                }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 12px;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 6px;
+            text-align: left;
+        }
+
+        th {
+            font-weight: bold;
             text-align: center;
-            margin-top: 10px;
-            font-size: 8px;
         }
 
-        .col-name {
-            width: 20px;
-        }
-
-        .separator {
-            border-top: 1px solid black; /* 訂單之間的分隔線 */
+        .total {
+            text-align: right;
+            font-weight: bold;
         }
     </style>
 </head>
 
 <body>
-    <div class="header">
+    <div class="invoice-header">
         <h2>銷貨列表</h2>
     </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th class="col-name">訂單編號</th>
-                <th class="col-name">日期</th>
-                <th class="col-name">客戶</th>
-                <th class="col-name">狀態</th>
-                <th class="col-name">總價格</th>
-                <th class="col-name">結清</th>
-                <th class="col-name">收款</th>
-                <th class="col-name">分期</th>
-            </tr>
-        </thead>
+    @foreach (var cus in Model)
+    {
+        <div class="invoice-info">
+            <div>
+                <p>訂單編號: @cus.o_No</p>
+                <p>訂單日期: @cus.o_Date</p>
+                <p>狀態: @cus.o_State</p>
+            </div>
 
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr class="order-separator">
-                    <td class="col-name">@item.o_No</td>
-                    <td class="col-name">@(item.o_Date.Value.ToString("yyyy-MM-dd"))</td>
-                    <td class="col-name">@item.Customer.c_Name</td>
-                    <td class="col-name">@item.o_State</td>
-                    <td class="col-name">@item.o_TotalPrice</td>
-                    <td class="col-name">@(item.o_IsSettled.HasValue?(item.o_IsSettled.Value?"是":"否"):"")</td>
-                    <td class="col-name">@(item.o_IsCollectPayment.HasValue?(item.o_IsCollectPayment.Value?"是":"否"):"")</td>
-                    <td class="col-name">@(item.o_IsInstallment.HasValue?(item.o_IsInstallment.Value?"是":"否"):"")</td>
-                </tr>
+            <div>
+                <p>客戶: @cus.Customer.c_Name</p>
+                <p>公司名: @cus.Customer.c_Company</p>
+                <p>電話: @cus.Customer.c_Phone1</p>
+                <p>地址: @cus.Customer.c_Address</p>
+            </div>
 
+            <div>
+                <p>總價格: @cus.o_TotalPrice</p>
+                <p>結清: @(cus.o_IsSettled.HasValue?(cus.o_IsSettled.Value?"是":"否"):"")</p>
+                <p>收款: @(cus.o_IsCollectPayment.HasValue ? (cus.o_IsCollectPayment.Value ? "是" : "否") : "")</p>
+                <p>分期: @(cus.o_IsInstallment.HasValue ? (cus.o_IsInstallment.Value ? "是" : "否") : "")</p>
+            </div>
+        </div>
+
+        <table>
+            <thead>
                 <tr>
-                    <td colspan="8">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>車架編號</th>
-                                    <th>產品類別</th>
-                                    <th>產品名稱</th>
-                                    <th>顏色</th>
-                                    <th>數量</th>
-                                    <th>單價</th>
-                                    <th>價格</th>
-                                    <th>車牌</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var od in item.OrderDetail)
-                                {
-                                    <tr>
-                                        <td>@od.Product.p_CarFrameNo</td>
-                                        <td>@od.Product.p_Type</td>
-                                        <td>@od.Product.p_Name</td>
-                                        <td>@od.Product.p_Color</td>
-                                        <td>@od.od_Quantity</td>
-                                        <td>@od.Product.p_Price</td>
-                                        <td>@(od.od_Quantity * od.Product.p_Price)</td>
-                                        <td>@od.od_LicensePlate</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </td>
+                    <th>車架編號</th>
+                    <th>產品類別</th>
+                    <th>產品名稱</th>
+                    <th>顏色</th>
+                    <th>數量</th>
+                    <th>單價</th>
+                    <th>價格</th>
+                    <th>車牌</th>
                 </tr>
-                <tr>
-                    <td colspan="8" class="separator"></td>
-                </tr>
-            }
-        </tbody>
-    </table>
-
-    <div class="footer">
+            </thead>
+            <tbody>
+                @foreach (var od in cus.OrderDetail)
+                {
+                    <tr>
+                        <td>@od.Product.p_CarFrameNo</td>
+                        <td>@od.Product.p_Type</td>
+                        <td>@od.Product.p_Name</td>
+                        <td>@od.Product.p_Color</td>
+                        <td>@od.od_Quantity</td>
+                        <td>@od.Product.p_Price</td>
+                        <td>@(od.od_Quantity * od.Product.p_Price)</td>
+                        <td>@od.od_LicensePlate</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    <div class="invoice-footer">
         <p>Generated on @DateTime.Now</p>
     </div>
 </body>

@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace Electric_Scooter.Controllers
 {
+    [IsLogin]
     public class ProductController : Controller
     {
         // GET: Product
@@ -89,6 +90,7 @@ namespace Electric_Scooter.Controllers
                 return View(product);
 
             product.p_CreateDate = DateTime.Now;
+            product.p_No = GenerateProdNo();
             _prodRep.Add(product);
 
             return RedirectToAction("Index");
@@ -186,6 +188,14 @@ namespace Electric_Scooter.Controllers
         {
             var models = _prodRep.GetModels();
             return Json(models.Select(x => new { id = x, text = x }), JsonRequestBehavior.AllowGet);
+        }
+
+        private string GenerateProdNo()
+        {
+            var maxId = _prodRep.GetAllData().Max(x => x.p_Id);
+            var newId = maxId + 1;
+
+            return "P" + newId.ToString("D5");
         }
     }
 }

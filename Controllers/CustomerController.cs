@@ -9,9 +9,9 @@ using System.Web.Mvc;
 
 namespace Electric_Scooter.Controllers
 {
+    [IsLogin]
     public class CustomerController : Controller
     {
-        // GET: Customer
         private IRepository<Customer> _rep;
 
         public CustomerController()
@@ -19,7 +19,7 @@ namespace Electric_Scooter.Controllers
             _rep = new Repository<Customer>(new I_ChiEntities());
         }
 
-        public ActionResult Index(string searchTerm, DateTime? startDate, DateTime? endDate, string city, string sortField, string sortOrder = "asc")
+        public ActionResult Index(string searchTerm, string city, string sortField, string sortOrder = "asc")
         {
             var data = _rep.GetAllData();
 
@@ -27,19 +27,9 @@ namespace Electric_Scooter.Controllers
             if (!string.IsNullOrEmpty(searchTerm))
             {
                 data = data.Where(x => (x.c_Name != null && x.c_Name.Contains(searchTerm)) ||
-                                       (x.c_IdCard != null && x.c_IdCard.Contains(searchTerm)) ||
                                        (x.c_Phone1 != null && x.c_Phone1.Contains(searchTerm)) ||
-                                       (x.c_Phone2 != null && x.c_Phone2.Contains(searchTerm)) ||
-                                       (x.c_Phone3 != null && x.c_Phone3.Contains(searchTerm)));
+                                       (x.c_Phone2 != null && x.c_Phone2.Contains(searchTerm)));
             }
-
-            //建立日期開始時間
-            if (startDate.HasValue)
-                data = data.Where(x => x.c_CreateDate >= startDate);
-
-            //建立日期結束時間
-            if (endDate.HasValue)
-                data = data.Where(x => x.c_CreateDate <= endDate);
 
             //城市
             if (!string.IsNullOrEmpty(city))
@@ -84,6 +74,7 @@ namespace Electric_Scooter.Controllers
                 return View(customer);
 
             customer.c_CreateDate = DateTime.Now;
+            customer.c_No = GenerateCusNo();
             _rep.Add(customer);
 
             return RedirectToAction("Index");
@@ -162,6 +153,14 @@ namespace Electric_Scooter.Controllers
         {
             _rep.Dispose();
             base.Dispose(disposing);
+        }
+
+        private string GenerateCusNo()
+        {
+            var maxId = _rep.GetAllData().Max(x => x.c_Id);
+            var newId = maxId + 1;
+
+            return "A" + newId.ToString("D5");
         }
     }
 }

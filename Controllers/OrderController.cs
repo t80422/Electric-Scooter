@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace Electric_Scooter.Controllers
 {
+    [IsLogin]
     /// <summary>
     /// 銷貨系統
     /// </summary>
@@ -19,6 +20,8 @@ namespace Electric_Scooter.Controllers
         private IRepository<Customer> _cusRep = new Repository<Customer>(new I_ChiEntities());
         private IRepository<Product> _prodRep = new Repository<Product>(new I_ChiEntities());
         private IOrderDetailRep _odRep = new OrderDetailRep(new I_ChiEntities());
+        private IRepository<PointSet> _psRep = new Repository<PointSet>(new I_ChiEntities());
+        private IPointRep _pointRep = new PointRep(new I_ChiEntities());
 
         public ActionResult Index(string searchTerm, string state, DateTime? startDate, DateTime? endDate, string sortField, string sortOrder = "asc")
         {
@@ -29,7 +32,8 @@ namespace Electric_Scooter.Controllers
             if (!string.IsNullOrEmpty(searchTerm))
             {
                 data = data.Where(x => x.o_No.Contains(searchTerm) ||
-                                       x.Customer.c_Name.Contains(searchTerm)
+                                       x.Customer.c_Name.Contains(searchTerm) ||
+                                       x.OrderDetail.Any(y => y.od_LicensePlate.Contains(searchTerm))
                                  );
             }
 
@@ -102,6 +106,24 @@ namespace Electric_Scooter.Controllers
                 _odRep.Add(detail);
             }
 
+            //保存點數
+            var pointSet = _psRep.GetDataById(1);
+            var multiple = pointSet.ps_Multiple;
+            var validity = pointSet.ps_Validity;
+
+            var points = new Points()
+            {
+                po_o_Id = data.Orders.o_Id,
+                po_c_Id = data.Orders.o_c_Id,
+                po_SentDate = data.Points.po_SentDate,
+                po_State = true,
+                po_Quantity = Convert.ToInt32(multiple * data.Orders.o_TotalPrice),
+                po_DueDate = data.Points.po_SentDate.Value.AddMonths(validity),
+                po_Type = "購買"
+            };
+
+            _pointRep.Add(points);
+
             return RedirectToAction("Index");
         }
 
@@ -115,7 +137,8 @@ namespace Electric_Scooter.Controllers
             var vm = new OrderVM()
             {
                 Orders = order,
-                OrderDetails = order.OrderDetail.ToList()
+                OrderDetails = order.OrderDetail.ToList(),
+                Points = _pointRep.GetDataByOrderId(id)
             };
 
             return View(vm);
@@ -145,6 +168,18 @@ namespace Electric_Scooter.Controllers
                 detail.od_o_Id = vm.Orders.o_Id;
                 _odRep.Add(detail);
             }
+
+            //重新計算點數
+            var pointSet = _psRep.GetDataById(1);
+            var multiple = pointSet.ps_Multiple;
+            var validity = pointSet.ps_Validity;
+            var points = _pointRep.GetDataByOrderId(vm.Orders.o_Id);
+            points.po_SentDate = vm.Points.po_SentDate;
+            points.po_DueDate = vm.Points.po_SentDate.Value.AddMonths(validity);
+            points.po_Quantity = Convert.ToInt32(multiple * vm.Orders.o_TotalPrice);
+            points.po_Type = "購買";
+
+            _pointRep.Update(points);
 
             return RedirectToAction("Index");
         }
@@ -199,6 +234,7 @@ namespace Electric_Scooter.Controllers
 
             // 生成PDF
             var pdfBytes = PDFHelper.GeneratePdfFromHtml(ControllerContext, "ExportToPdfView", data);
+            //var pdfBytes = PDFHelper.GeneratePdfFromHtml(ControllerContext, "ExportToPdfView", data.First());
 
             return File(pdfBytes, "application/pdf");
         }

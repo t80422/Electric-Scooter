@@ -18,6 +18,7 @@ namespace Electric_Scooter.Models
         public Orders()
         {
             this.OrderDetail = new HashSet<OrderDetail>();
+            this.Points = new HashSet<Points>();
         }
     
         public int o_Id { get; set; }
@@ -31,8 +32,10 @@ namespace Electric_Scooter.Models
         public Nullable<bool> o_IsInstallment { get; set; }
         public Nullable<System.DateTime> o_CreateDate { get; set; }
     
-        public virtual Customer Customer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetail> OrderDetail { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Points> Points { get; set; }
+        public virtual Customer Customer { get; set; }
     }
 }

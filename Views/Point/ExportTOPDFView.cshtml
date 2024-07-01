@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Electric_Scooter.Models.Points>
+@{
+    Layout = null;
+}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed; /* 防止超出頁面 */
+            margin-bottom: 20px;
+            font-size: 10px;
+        }
+
+        th, td {
+            padding: 6px;
+            text-align: left;
+            word-wrap: break-word; /* 防止文字超出表格 */
+            border:1px solid black;
+        }
+
+        th {
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 8px;
+        }
+
+        .col-name {
+            width: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h2>會員點數列表</h2>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th class="col-name">客戶</th>
+                <th class="col-name">電話</th>
+                <th class="col-name">訂單編號</th>
+                <th class="col-name">點數</th>
+                <th class="col-name">發送日</th>
+                <th class="col-name">到期日</th>
+                <th class="col-name">狀態</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="order-separator">
+                    <th class="col-name">@item.Customer.c_Name</th>
+                    <th class="col-name">@item.Customer.c_Phone1</th>
+                    <th class="col-name">@(item.po_o_Id?.ToString())</th>
+                    <th class="col-name">@item.po_Quantity</th>
+                    <th class="col-name">@item.po_SentDate.Value.ToString("yyyy-MM-dd")</th>
+                    <th class="col-name">@item.po_DueDate.Value.ToString("yyyy-MMdd")</th>
+                    <th class="col-name">@(item.po_State.Value?"有效":"失效")</th>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="footer">
+        <p>Generated on @DateTime.Now</p>
+    </div>
+</body>
+</html>

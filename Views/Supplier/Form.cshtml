@@ -8,297 +8,324 @@
 
 <section class="form-horizontal">
     <div class="form-group">
-        @Html.LabelFor(x => x.s_Name, "名稱", new { @class = "control-label col-md-2" })
-        <div class="col-md-6">
-            @if (isView)
-            {
-                <p class="form-control-static">@Model.s_Name</p>
-            }
-            else
-            {
-                @Html.EditorFor(x => x.s_Name, new { htmlAttributes = new { @class = "form-control", maxlength = 20 } })
-            }
+        <div class="display-flex flex-1">
+            @Html.LabelFor(x => x.s_Name, "名稱", new { @class = "flex-150px text-right" })
+            <div class="flex-1">
+                @if (isView)
+                {
+                    <p>@Model.s_Name</p>
+                }
+                else
+                {
+                    @Html.EditorFor(x => x.s_Name, new { htmlAttributes = new { @class = "form-control", maxlength = 20 } })
+                }
+            </div>
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(x => x.s_InchargePerson, "負責人", new { @class = "control-label col-md-2" })
-        <div class="col-md-6">
-            @if (isView)
-            {
-                <p class="form-control-static">@Model.s_InchargePerson</p>
-            }
-            else
-            {
-                @Html.EditorFor(x => x.s_InchargePerson, new { htmlAttributes = new { @class = "form-control", maxlength = 20 } })
-            }
+        <div class="display-flex flex-1">
+            @Html.LabelFor(x => x.s_InchargePerson, "負責人", new { @class = "flex-150px text-right" })
+            <div class="flex-1">
+                @if (isView)
+                {
+                    <p>@Model.s_InchargePerson</p>
+                }
+                else
+                {
+                    @Html.EditorFor(x => x.s_InchargePerson, new { htmlAttributes = new { @class = "form-control", maxlength = 20 } })
+                }
+            </div>
         </div>
     </div>
 
     <div class="form-group">
-        @Html.Label("電話1", new { @class = "control-label col-md-2" })
-        <div class="col-md-1">
-            @if (isView)
-            {
-                <p class="form-control-static">@Model.s_Phone1Type</p>
-            }
-            else
-            {
-                @Html.DropDownListFor(x => x.s_Phone1Type, new SelectList(new[]
-                 {
-                     "住家","手機","公司","傳真"
-                 }), "請選擇", new { @class = "form-control" })
-            }
-        </div>
-        <div class="col-md-5">
-            @if (isView)
-            {
-                <p class="form-control-static">@Model.s_Phone1</p>
-            }
-            else
-            {
-                @Html.EditorFor(x => x.s_Phone1, new { htmlAttributes = new { @class = "form-control", maxlength = 11, oninput = "this.value = this.value.replace(/[^0-9]/g, '')" } })
-            }
+        <div class="display-flex flex-1">
+            @Html.Label("電話1", new { @class = "flex-150px text-right" })
+            <div class="flex-1">
+                @if (isView)
+                {
+                    <p>@Model.s_Phone1Type</p>
+                }
+                else
+                {
+                    @Html.DropDownListFor(x => x.s_Phone1Type, new SelectList(new[]
+                    {
+                        "住家","手機","公司","傳真"
+                    }), "請選擇", new { @class = "form-control" })
+                }
+            </div>
+            <div class="flex-3">
+                @if (isView)
+                {
+                    <p>@Model.s_Phone1</p>
+                }
+                else
+                {
+                    @Html.EditorFor(x => x.s_Phone1, new { htmlAttributes = new { @class = "form-control", maxlength = 12, oninput = "this.value = this.value.replace(/[^0-9+\\-()# ]/g, '')" } })
+                }
+            </div>
         </div>
     </div>
 
     <div class="form-group">
-        @Html.Label("電話2", new { @class = "control-label col-md-2" })
-        <div class="col-md-1">
-            @if (isView)
-            {
-                <p class="form-control-static">@Model.s_Phone2Type</p>
-            }
-            else
-            {
-                @Html.DropDownListFor(x => x.s_Phone2Type, new SelectList(new[]
+        <div class="display-flex flex-1">
+            @Html.Label("電話2", new { @class = "flex-150px text-right" })
+            <div class="flex-1">
+                @if (isView)
+                {
+                    <p>@Model.s_Phone2Type</p>
+                }
+                else
+                {
+                    @Html.DropDownListFor(x => x.s_Phone2Type, new SelectList(new[]
+                    {
+                        "住家","手機","公司","傳真"
+                    }), "請選擇", new { @class = "form-control" })
+                }
+            </div>
+            <div class="flex-3">
+                @if (isView)
+                {
+                    <p>@Model.s_Phone2</p>
+                }
+                else
+                {
+                    @Html.EditorFor(x => x.s_Phone2, new { htmlAttributes = new { @class = "form-control", maxlength = 12, oninput = "this.value = this.value.replace(/[^0-9+\\-()# ]/g, '')" } })
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="display-flex flex-1">
+            @Html.Label("電話3", new { @class = "flex-150px text-right" })
+            <div class="flex-1">
+                @if (isView)
+                {
+                    <p>@Model.s_Phone3Type</p>
+                }
+                else
+                {
+                    @Html.DropDownListFor(x => x.s_Phone3Type, new SelectList(new[]
+                    {
+                        "住家","手機","公司","傳真"
+                    }), "請選擇", new { @class = "form-control" })
+                }
+            </div>
+            <div class="flex-3">
+                @if (isView)
+                {
+                    <p>@Model.s_Phone3</p>
+                }
+                else
+                {
+                    @Html.EditorFor(x => x.s_Phone3, new { htmlAttributes = new { @class = "form-control", maxlength = 12, oninput = "this.value = this.value.replace(/[^0-9+\\-()# ]/g, '')" } })
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="display-flex flex-1">
+            @Html.LabelFor(x => x.s_Email, "信箱", new { @class = "flex-150px text-right" })
+            <div class="flex-1">
+                @if (isView)
+                {
+                    <p>@Model.s_Email</p>
+                }
+                else
+                {
+                    @Html.EditorFor(x => x.s_Email, new { htmlAttributes = new { @class = "form-control", maxlength = 40 } })
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="display-flex flex-1">
+            @Html.LabelFor(x => x.s_LineId, "Line ID", new { @class = "flex-150px text-right" })
+            <div class="flex-1">
+                @if (isView)
+                {
+                    <p>@Model.s_LineId</p>
+                }
+                else
+                {
+                    @Html.EditorFor(x => x.s_LineId, new { htmlAttributes = new { @class = "form-control", maxlength = 20 } })
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="display-flex flex-1">
+            @Html.LabelFor(x => x.s_City, "縣市", new { @class = "flex-150px text-right" })
+            <div class="flex-1">
+                @if (isView)
+                {
+                    <p>@Model.s_City</p>
+                }
+                else
+                {
+                    @Html.DropDownListFor(x => x.s_City, new SelectList(CityHelper.GetCities()), "請選擇", new { @class = "form-control" })
+                }
+            </div>
+        </div>
+        <div class="display-flex flex-1">
+            @Html.LabelFor(x => x.s_PostalCode, "郵遞區號", new { @class = "flex-150px text-right" })
+            <div class="flex-1">
+                @if (isView)
+                {
+                    <p>@Model.s_PostalCode</p>
+                }
+                else
+                {
+                    @Html.EditorFor(x => x.s_PostalCode, new { htmlAttributes = new { @class = "form-control", maxlength = 5, oninput = "this.value = this.value.replace(/[^0-9]/g, '')" } })
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="display-flex flex-1">
+            @Html.LabelFor(x => x.s_Address, "地址", new { @class = "flex-150px text-right" })
+            <div class="flex-1">
+                @if (isView)
+                {
+                    <p>@Model.s_Address</p>
+                }
+                else
+                {
+                    @Html.EditorFor(x => x.s_Address, new { htmlAttributes = new { @class = "form-control", maxlength = 40 } })
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="display-flex flex-1">
+            @Html.LabelFor(x => x.s_Sales, "業務負責人", new { @class = "flex-150px text-right" })
+            <div class="flex-1">
+                @if (isView)
+                {
+                    <p>@Model.s_Sales</p>
+                }
+                else
+                {
+                    @Html.EditorFor(x => x.s_Sales, new { htmlAttributes = new { @class = "form-control", maxlength = 20 } })
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="display-flex flex-1">
+            @Html.Label("業務電話1", new { @class = "flex-150px text-right" })
+            <div class="flex-1">
+                @if (isView)
+                {
+                    <p>@Model.s_SalesPhone1Type</p>
+                }
+                else
+                {
+                    @Html.DropDownListFor(x => x.s_SalesPhone1Type, new SelectList(new[]
                 {
                     "住家","手機","公司","傳真"
                 }), "請選擇", new { @class = "form-control" })
-            }
-        </div>
-        <div class="col-md-5">
-            @if (isView)
-            {
-                <p class="form-control-static">@Model.s_Phone2</p>
-            }
-            else
-            {
-                @Html.EditorFor(x => x.s_Phone2, new { htmlAttributes = new { @class = "form-control", maxlength = 11, oninput = "this.value = this.value.replace(/[^0-9]/g, '')", placeholder = "選填" } })
-            }
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.Label("電話3", new { @class = "control-label col-md-2" })
-        <div class="col-md-1">
-            @if (isView)
-            {
-                <p class="form-control-static">@Model.s_Phone3Type</p>
-            }
-            else
-            {
-                @Html.DropDownListFor(x => x.s_Phone3Type, new SelectList(new[]
+                }
+            </div>
+            <div class="flex-3">
+                @if (isView)
                 {
-                    "住家","手機","公司","傳真"
-                }), "請選擇", new { @class = "form-control" })
-            }
-        </div>
-        <div class="col-md-5">
-            @if (isView)
-            {
-                <p class="form-control-static">@Model.s_Phone3</p>
-            }
-            else
-            {
-                @Html.EditorFor(x => x.s_Phone3, new { htmlAttributes = new { @class = "form-control", maxlength = 11, oninput = "this.value = this.value.replace(/[^0-9]/g, '')", placeholder = "選填" } })
-            }
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(x => x.s_Email, "信箱", new { @class = "control-label col-md-2" })
-        <div class="col-md-6">
-            @if (isView)
-            {
-                <p class="form-control-static">@Model.s_Email</p>
-            }
-            else
-            {
-                @Html.EditorFor(x => x.s_Email, new { htmlAttributes = new { @class = "form-control", maxlength = 40 } })
-            }
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(x => x.s_LineId, "Line ID", new { @class = "control-label col-md-2" })
-        <div class="col-md-6">
-            @if (isView)
-            {
-                <p class="form-control-static">@Model.s_LineId</p>
-            }
-            else
-            {
-                @Html.EditorFor(x => x.s_LineId, new { htmlAttributes = new { @class = "form-control", maxlength = 20 } })
-            }
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(x => x.s_City, "縣市", new { @class = "control-label col-md-2" })
-        <div class="col-md-2">
-            @if (isView)
-            {
-                <p class="form-control-static">@Model.s_City</p>
-            }
-            else
-            {
-                @Html.DropDownListFor(x => x.s_City, new SelectList(CityHelper.GetCities()), "請選擇", new { @class = "form-control" })
-            }
-        </div>
-
-        @Html.LabelFor(x => x.s_PostalCode, "郵遞區號", new { @class = "control-label col-md-2" })
-        <div class="col-md-2">
-            @if (isView)
-            {
-                <p class="form-control-static">@Model.s_PostalCode</p>
-            }
-            else
-            {
-                @Html.EditorFor(x => x.s_PostalCode, new { htmlAttributes = new { @class = "form-control", maxlength = 5, oninput = "this.value = this.value.replace(/[^0-9]/g, '')" } })
-            }
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(x => x.s_Address, "地址", new { @class = "control-label col-md-2" })
-        <div class="col-md-6">
-            @if (isView)
-            {
-                <p class="form-control-static">@Model.s_Address</p>
-            }
-            else
-            {
-                @Html.EditorFor(x => x.s_Address, new { htmlAttributes = new { @class = "form-control", maxlength = 40 } })
-            }
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(x => x.s_Sales, "業務負責人", new { @class = "control-label col-md-2" })
-        <div class="col-md-6">
-            @if (isView)
-            {
-                <p class="form-control-static">@Model.s_Sales</p>
-            }
-            else
-            {
-                @Html.EditorFor(x => x.s_Sales, new { htmlAttributes = new { @class = "form-control", maxlength = 20 } })
-            }
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.Label("業務電話1", new { @class = "control-label col-md-2" })
-        <div class="col-md-1">
-            @if (isView)
-            {
-                <p class="form-control-static">@Model.s_SalesPhone1Type</p>
-            }
-            else
-            {
-                @Html.DropDownListFor(x => x.s_SalesPhone1Type, new SelectList(new[]
-               {
-                   "住家","手機","公司","傳真"
-               }), "請選擇", new { @class = "form-control" })
-            }
-        </div>
-        <div class="col-md-5">
-            @if (isView)
-            {
-                <p class="form-control-static">@Model.s_SalesPhone1</p>
-            }
-            else
-            {
-                @Html.EditorFor(x => x.s_SalesPhone1, new { htmlAttributes = new { @class = "form-control", maxlength = 11, oninput = "this.value = this.value.replace(/[^0-9]/g, '')" } })
-            }
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.Label("業務電話2", new { @class = "control-label col-md-2" })
-        <div class="col-md-1">
-            @if (isView)
-            {
-                <p class="form-control-static">@Model.s_SalesPhone2Type</p>
-            }
-            else
-            {
-                @Html.DropDownListFor(x => x.s_SalesPhone2Type, new SelectList(new[]
+                    <p>@Model.s_SalesPhone1</p>
+                }
+                else
                 {
-                    "住家","手機","公司","傳真"
-                }), "請選擇", new { @class = "form-control" })
-            }
-        </div>
-        <div class="col-md-5">
-            @if (isView)
-            {
-                <p class="form-control-static">@Model.s_SalesPhone2</p>
-            }
-            else
-            {
-                @Html.EditorFor(x => x.s_SalesPhone2, new { htmlAttributes = new { @class = "form-control", maxlength = 11, oninput = "this.value = this.value.replace(/[^0-9]/g, '')", placeholder = "選填" } })
-            }
+                    @Html.EditorFor(x => x.s_SalesPhone1, new { htmlAttributes = new { @class = "form-control", maxlength = 12, oninput = "this.value = this.value.replace(/[^0-9+\\-()# ]/g, '')" } })
+                }
+            </div>
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(x => x.s_Memo, "備註", new { @class = "control-label col-md-2" })
-        <div class="col-md-6">
-            @if (isView)
-            {
-                <p class="form-control-static">@Model.s_Memo</p>
-            }
-            else
-            {
-                @Html.EditorFor(x => x.s_Memo, new { htmlAttributes = new { @class = "form-control", maxlength = 40 } })
-            }
+        <div class="display-flex flex-1">
+            @Html.Label("業務電話2", new { @class = "flex-150px text-right" })
+            <div class="flex-1">
+                @if (isView)
+                {
+                    <p>@Model.s_SalesPhone2Type</p>
+                }
+                else
+                {
+                    @Html.DropDownListFor(x => x.s_SalesPhone2Type, new SelectList(new[]
+                    {
+                        "住家","手機","公司","傳真"
+                    }), "請選擇", new { @class = "form-control" })
+                }
+            </div>
+            <div class="flex-3">
+                @if (isView)
+                {
+                    <p>@Model.s_SalesPhone2</p>
+                }
+                else
+                {
+                    @Html.EditorFor(x => x.s_SalesPhone2, new { htmlAttributes = new { @class = "form-control", maxlength = 12, oninput = "this.value = this.value.replace(/[^0-9+\\-()# ]/g, '')" } })
+                }
+            </div>
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(x => x.s_State, "狀態", new { @class = "control-label col-md-2" })
-        <div class="col-md-6">
-            @if (isView)
-            {
-            <p class="form-control-static">@((Model.s_State) ? "開啟" : "停用")</p>
-            }
-            else
-            {
-                <div class="form-check form-check-inline">
-                    @Html.RadioButtonFor(x => x.s_State, true, new { id = "open", @class = "form-check-input" })
-                    @Html.Label("open", "開啟", new { @class = "form-check-label" })
-                </div>
-                <div class="form-check form-check-inline">
-                    @Html.RadioButtonFor(x => x.s_State, false, new { id = "close", @class = "form-check-input" })
-                    @Html.Label("close", "停用", new { @class = "form-check-label" })
-                </div>
-            }
+        <div class="display-flex flex-1">
+            @Html.LabelFor(x => x.s_Memo, "備註", new { @class = "flex-150px text-right" })
+            <div class="flex-1">
+                @if (isView)
+                {
+                    <p>@Model.s_Memo</p>
+                }
+                else
+                {
+                    @Html.EditorFor(x => x.s_Memo, new { htmlAttributes = new { @class = "form-control", maxlength = 40 } })
+                }
+            </div>
         </div>
     </div>
 
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            @if (isView)
-            {
-                @Html.ActionLink("編輯", "Edit", new { id = Model.s_Id }, new { @class = "btn btn-primary" })
-                @Html.ActionLink("返回列表", "Index", "Supplier", new { @class = "btn btn-secondary" })
-            }
-            else
-            {
-                <input type="submit" value="儲存" class="btn btn-primary" />
-                @Html.ActionLink("返回列表", "Index", null, new { @class = "btn btn-secondary" })
-            }
+        <div class="display-flex flex-1">
+            @Html.LabelFor(x => x.s_State, "狀態", new { @class = "flex-150px text-right" })
+            <div class="flex-1">
+                @if (isView)
+                {
+                    <p>@((Model.s_State) ? "開啟" : "停用")</p>
+                }
+                else
+                {
+                    <div class="form-check form-check-inline">
+                        @Html.RadioButtonFor(x => x.s_State, true, new { id = "open", @class = "form-check-input" })
+                        @Html.Label("open", "開啟", new { @class = "form-check-label" })
+                    </div>
+                    <div class="form-check form-check-inline">
+                        @Html.RadioButtonFor(x => x.s_State, false, new { id = "close", @class = "form-check-input" })
+                        @Html.Label("close", "停用", new { @class = "form-check-label" })
+                    </div>
+                }
+            </div>
         </div>
+    </div>
+
+    <div class="form-bottom-btn">
+        @if (isView)
+        {
+            @Html.ActionLink("編輯", "Edit", new { id = Model.s_Id }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("返回列表", "Index", "Supplier", new { @class = "btn btn-secondary" })
+        }
+        else
+        {
+            <input type="submit" value="儲存" class="btn btn-primary" />
+            @Html.ActionLink("返回列表", "Index", null, new { @class = "btn btn-secondary" })
+        }
     </div>
 </section>

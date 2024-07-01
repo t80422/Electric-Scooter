@@ -30,38 +30,36 @@
         @using (Html.BeginForm("Index", "Product", FormMethod.Get))
         {
             <section class="tool-wrap">
-                <div class="tool-flex">
-                    <div class="filter-select">
-                        <label>分類</label>
-                        <select name="type">
-                            <option value="">請選擇</option>
-                            <option value="車輛A01" @(Request.QueryString["type"] == "車輛A01" ? "selected" : "")>車輛A01</option>
-                            <option value="電池B01" @(Request.QueryString["type"] == "電池B01" ? "selected" : "")>電池B01</option>
-                            <option value="零件C01" @(Request.QueryString["type"] == "零件C01" ? "selected" : "")>零件C01</option>
-                        </select>
-                    </div>
+                <div class="filter-select">
+                    <label>分類</label>
+                    <select name="type">
+                        <option value="">請選擇</option>
+                        <option value="車輛A01" @(Request.QueryString["type"] == "車輛A01" ? "selected" : "")>車輛A01</option>
+                        <option value="電池B01" @(Request.QueryString["type"] == "電池B01" ? "selected" : "")>電池B01</option>
+                        <option value="零件C01" @(Request.QueryString["type"] == "零件C01" ? "selected" : "")>零件C01</option>
+                    </select>
+                </div>
 
-                    <div class="filter-price">
-                        <label>價格範圍</label>
-                        <div>
-                            <input type="number" name="minPrice" value="@Request.QueryString["minPrice"]" placeholder="最小價格" />
-                        </div>
-                        <span></span>
-                        <div>
-                            <input type="number" name="maxPrice" value="@Request.QueryString["maxPrice"]" placeholder="最大價格" />
-                        </div>
+                <div class="filter-price">
+                    <label>價格範圍</label>
+                    <div>
+                        <input type="number" name="minPrice" value="@Request.QueryString["minPrice"]" placeholder="最小價格" />
                     </div>
-
-                    <div class="filter-bottom">
-                        <button type="submit" class="btn-filter-submit">確定</button>
-                        <a href="@Url.Action("Index")" class="btn-filter-clean">清除條件</a>
+                    <span></span>
+                    <div>
+                        <input type="number" name="maxPrice" value="@Request.QueryString["maxPrice"]" placeholder="最大價格" />
                     </div>
+                </div>
 
-                    <div class="tool-search">
-                        <div class="ts-box">
-                            <input type="text" name="searchTerm" placeholder="請輸入關鍵字搜尋" value="@Request.QueryString["searchTerm"]">
-                            <button type="submit" class="btn-search"></button>
-                        </div>
+                <div class="filter-bottom">
+                    <button type="submit" class="btn-filter-submit">確定</button>
+                    <a href="@Url.Action("Index")" class="btn-filter-clean">清除條件</a>
+                </div>
+
+                <div class="tool-search">
+                    <div class="ts-box">
+                        <input type="text" name="searchTerm" placeholder="請輸入關鍵字搜尋" value="@Request.QueryString["searchTerm"]">
+                        <button type="submit" class="btn-search"></button>
                     </div>
                 </div>
 
@@ -80,7 +78,7 @@
                         <div class="f-0">
                             <input type="checkbox" id="checkAll">
                         </div>
-                        <div class="f-1">編號</div>
+                        <div class="f-1">商品代號</div>
                         <div class="f-1">
                             <a href="@GetSortableLink("分類","Type")">分類</a>
                         </div>
@@ -103,7 +101,7 @@
                                 <div class="f-0">
                                     <input type="checkbox" class="list-checkbox" onclick="event.stopPropagation();" />
                                 </div>
-                                <div class="f-1">@product.p_Id</div>
+                                <div class="f-1">@product.p_No</div>
                                 <div class="f-1">@product.p_Type</div>
                                 <div class="f-1">@product.p_Name</div>
                                 <div class="f-1">@product.p_Model</div>

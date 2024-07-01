@@ -7,133 +7,163 @@
 
 <section class="form-horizontal">
     <div class="form-group">
-        @Html.LabelFor(x => x.p_Type, "分類", new { @class = "control-label col-md-2" })
-        <div class="col-md-6">
-            @if (isView)
-            {
-                <p class="form-control-static">@Model.p_Type</p>
-            }
-            else
-            {
-                @Html.DropDownListFor(x => x.p_Type, new SelectList(new[]
-                 {
-                     "車輛A01","電池B01","零件C01"
-                 }), "請選擇", new { @class = "form-control" })
-            }
+        <div class="display-flex flex-1">
+            @Html.LabelFor(x => x.p_No, "商品代號", new { @class = "flex-150px text-right" })
+            <div class="flex-1">
+                @if (isView)
+                {
+                    <p>@Model.p_No</p>
+                }
+                else
+                {
+                    @Html.TextBoxFor(x => x.p_No, new { @class = "form-control", @readonly=""})
+                }
+            </div>
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(x => x.p_Name, "名稱", new { @class = "control-label col-md-2" })
-        <div class="col-md-6">
-            @if (isView)
-            {
-                <p class="form-control-static">@Model.p_Name</p>
-            }
-            else
-            {
-                @Html.EditorFor(model => model.p_Name, new { @class = "easyui-combobox", maxlength = 20 })
-            }
+        <div class="display-flex flex-1">
+            @Html.LabelFor(x => x.p_Type, "分類", new { @class = "flex-150px text-right" })
+            <div class="flex-1">
+                @if (isView)
+                {
+                    <p>@Model.p_Type</p>
+                }
+                else
+                {
+                    @Html.DropDownListFor(x => x.p_Type, new SelectList(new[]
+                    {
+                        "車輛A01","電池B01","零件C01"
+                    }), "請選擇", new { @class = "form-control" })
+                }
+            </div>
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(x => x.p_Model, "型號", new { @class = "control-label col-md-2" })
-        <div class="col-md-6">
-            @if (isView)
-            {
-                <p class="form-control-static">@Model.p_Model</p>
-            }
-            else
-            {
-                @Html.TextBoxFor(model => model.p_Model, new { @class = "easyui-combobox", maxlength = 20 })
-            }
+        <div class="display-flex flex-1">
+            @Html.LabelFor(x => x.p_Name, "名稱", new { @class = "flex-150px text-right" })
+            <div class="flex-1">
+                @if (isView)
+                {
+                    <p>@Model.p_Name</p>
+                }
+                else
+                {
+                    @Html.EditorFor(model => model.p_Name, new { @class = "easyui-combobox", maxlength = 20 })
+                }
+            </div>
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(x => x.p_Color, "顏色", new { @class = "control-label col-md-2" })
-        <div class="col-md-6">
-            @if (isView)
-            {
-                <p class="form-control-static">@Model.p_Color</p>
-            }
-            else
-            {
-                @Html.TextBoxFor(model => model.p_Color, new { @class = "easyui-combobox", maxlength = 20 })
-            }
+        <div class="display-flex flex-1">
+            @Html.LabelFor(x => x.p_Model, "型號", new { @class = "flex-150px text-right" })
+            <div class="flex-1">
+                @if (isView)
+                {
+                    <p>@Model.p_Model</p>
+                }
+                else
+                {
+                    @Html.TextBoxFor(model => model.p_Model, new { @class = "easyui-combobox", maxlength = 20 })
+                }
+            </div>
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(x => x.p_MotorNo, "馬達編號", new { @class = "control-label col-md-2" })
-        <div class="col-md-6">
-            @if (isView)
-            {
-                <p class="form-control-static">@Model.p_MotorNo</p>
-            }
-            else
-            {
-                @Html.EditorFor(x => x.p_MotorNo, new { htmlAttributes = new { @class = "form-control alpha-numeric", maxlength = 20 } })
-            }
+        <div class="display-flex flex-1">
+            @Html.LabelFor(x => x.p_Color, "顏色", new { @class = "flex-150px text-right" })
+            <div class="flex-1">
+                @if (isView)
+                {
+                    <p>@Model.p_Color</p>
+                }
+                else
+                {
+                    @Html.TextBoxFor(model => model.p_Color, new { @class = "easyui-combobox", maxlength = 20 })
+                }
+            </div>
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(x => x.p_CarFrameNo, "車架編號", new { @class = "control-label col-md-2" })
-        <div class="col-md-6">
-            @if (isView)
-            {
-                <p class="form-control-static">@Model.p_CarFrameNo</p>
-            }
-            else
-            {
-                @Html.EditorFor(x => x.p_CarFrameNo, new { htmlAttributes = new { @class = "form-control alpha-numeric", maxlength = 20 } })
-            }
+        <div class="display-flex flex-1">
+            @Html.LabelFor(x => x.p_MotorNo, "馬達編號", new { @class = "flex-150px text-right" })
+            <div class="flex-1">
+                @if (isView)
+                {
+                    <p>@Model.p_MotorNo</p>
+                }
+                else
+                {
+                    @Html.EditorFor(x => x.p_MotorNo, new { htmlAttributes = new { @class = "form-control alpha-numeric", maxlength = 20 } })
+                }
+            </div>
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(x => x.p_Price, "售價", new { @class = "control-label col-md-2" })
-        <div class="col-md-6">
-            @if (isView)
-            {
-                <p class="form-control-static">@Model.p_Price</p>
-            }
-            else
-            {
-                @Html.EditorFor(x => x.p_Price, new { htmlAttributes = new { @class = "form-control", maxlength = 20 } })
-            }
+        <div class="display-flex flex-1">
+            @Html.LabelFor(x => x.p_CarFrameNo, "車架編號", new { @class = "flex-150px text-right" })
+            <div class="flex-1">
+                @if (isView)
+                {
+                    <p>@Model.p_CarFrameNo</p>
+                }
+                else
+                {
+                    @Html.EditorFor(x => x.p_CarFrameNo, new { htmlAttributes = new { @class = "form-control alpha-numeric", maxlength = 20 } })
+                }
+            </div>
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(x => x.p_s_Id, "供應商", new { @class = "control-label col-md-2" })
-        <div class="col-md-6">
-            @if (isView)
-            {
-                <p class="form-control-static">@Model.Supplier.s_Name</p>
-            }
-            else
-            {
-                @Html.TextBoxFor(x => x.p_s_Id, new { @class = "easyui-combobox" })
-            }
+        <div class="display-flex flex-1">
+            @Html.LabelFor(x => x.p_Price, "售價", new { @class = "flex-150px text-right" })
+            <div class="flex-1">
+                @if (isView)
+                {
+                    <p>@Model.p_Price</p>
+                }
+                else
+                {
+                    @Html.EditorFor(x => x.p_Price, new { htmlAttributes = new { @class = "form-control", maxlength = 20 } })
+                }
+            </div>
         </div>
     </div>
 
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            @if (isView)
-            {
-                @Html.ActionLink("編輯", "Edit", new { id = Model.p_Id }, new { @class = "btn btn-primary" })
-                @Html.ActionLink("返回列表", "Index", "Product", new { @class = "btn btn-secondary" })
-            }
-            else
-            {
-                <input type="submit" value="儲存" class="btn btn-primary" />
-                @Html.ActionLink("返回列表", "Index", null, new { @class = "btn btn-secondary" })
-            }
+        <div class="display-flex flex-1">
+            @Html.LabelFor(x => x.p_s_Id, "供應商", new { @class = "flex-150px text-right" })
+            <div class="flex-1">
+                @if (isView)
+                {
+                    <p>@(Model.Supplier?.s_Name)</p>
+                }
+                else
+                {
+                    @Html.TextBoxFor(x => x.p_s_Id, new { @class = "easyui-combobox" })
+                }
+            </div>
         </div>
+    </div>
+
+    <div class="form-bottom-btn">
+        @if (isView)
+        {
+            @Html.ActionLink("編輯", "Edit", new { id = Model.p_Id }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("返回列表", "Index", "Product", new { @class = "btn btn-secondary" })
+        }
+        else
+        {
+            <input type="submit" value="儲存" class="btn btn-primary" />
+            @Html.ActionLink("返回列表", "Index", null, new { @class = "btn btn-secondary" })
+        }
     </div>
 </section>
 

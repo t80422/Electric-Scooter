@@ -111,7 +111,47 @@ $(window).on('resize', function () {
     }
 });
 
-//�C�L
+//�C�L
 function print(url) {
     window.open(url, '_blank');
 }
+
+// 計算 .list-wrap 高度
+$(function () {
+    function adjustListHeight() {
+        if ($(".list-wrap").length === 0) {
+            return; // 如果 .list-wrap 不存在，退出函數
+        }
+
+        var totalHeight = ['.header-wrap', '.breadcrumb-wrap', '.tool-wrap', '.pages-wrap']
+            .map(selector => $(selector).outerHeight(true))
+            .reduce((acc, height) => acc + height, 0);
+
+        var listHeight = $(window).height() - totalHeight;
+        $(".list-wrap").height(listHeight);
+    }
+
+    adjustListHeight();
+
+    $(window).resize(adjustListHeight);
+});
+
+// 計算 .form-horizontal 高度
+$(function () {
+    function adjustFormHeight() {
+        if ($(".form-horizontal").length === 0) {
+            return; // 如果 .form-horizontal 不存在，退出函數
+        }
+
+        var totalHeight = ['.header-wrap', '.breadcrumb-wrap']
+            .map(selector => $(selector).outerHeight(true))
+            .reduce((acc, height) => acc + height, 0);
+
+        var listHeight = $(window).height() - totalHeight;
+        $(".form-horizontal").height(listHeight);
+    }
+
+    adjustFormHeight();
+
+    $(window).resize(adjustFormHeight);
+});

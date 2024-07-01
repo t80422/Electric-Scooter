@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Electric_Scooter.Models.Customer>
+@using Electric_Scooter.Helpers
+
+<main class="container-wrap">
+    <div class="container-main">
+        <!-- breadcrumb -->
+        <section class="breadcrumb-wrap">
+            <ul>
+                <li>
+                    <a href="">首頁</a>
+                </li>
+                <li>
+                    <p>客戶資料管理</p>
+                </li>
+            </ul>
+        </section>
+        <!-- tool -->
+        @using (Html.BeginForm("Index", "Customer", FormMethod.Get))
+        {
+            <section class="tool-wrap">
+                <div class="tool-flex">
+                    <div class="filter-select">
+                        <label>縣市</label>
+                        <select name="city">
+                            <option value="" disabled selected>請選擇</option>
+                            @foreach (var city in CityHelper.GetCities())
+                            {
+                                <option value="@city" @(Request.QueryString["city"] == city ? "selected" : "")>@city</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="filter-bottom">
+                        <button type="submit" class="btn-filter-submit">確定</button>
+                        <a href="@Url.Action("Index", "Customer")" class="btn-filter-clean">清除條件</a>
+                    </div>
+
+                    <div class="tool-search">
+                        <div class="ts-box">
+                            <input type="text" name="searchTerm" placeholder="請輸入關鍵字搜尋" value="@Request.QueryString["searchTerm"]">
+                            <button type="submit" class="btn-search"></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tool-btn">
+                    <button type="button" class="btn-add" onclick="location='@Url.Action("Create")'"><span>新增一筆</span></button>
+                    <button type="button" class="btn-export" onclick="print('@Url.Action("Print")')"><span>列印</span></button>
+                    <button type="button" class="btn-export" onclick="location='@Url.Action("ExportToPDF")'"><span>匯出</span></button>
+                </div>
+            </section>
+        }
+        <!-- list -->
+        <section class="list-wrap">
+            <div class="list-overflow">
+                <div class="list-main">
+                    <div class="list-title">
+                        <div class="f-1">客戶代號</div>
+                        <div class="f-2">姓名</div>
+                        <div class="f-2">手機</div>
+                        <div class="f-2">車牌</div>
+                        <div class="f-5 ta-left">地址</div>
+                        <div class="f-2">操作</div>
+                    </div>
+
+                    <div class="list-list">
+                        @foreach (var cus in Model)
+                        {
+                            <div class="list-row" onclick="location.href='@Url.Action("Details", "Customer", new { id = cus.c_Id })'" style="cursor: pointer;">
+                                <div class="f-1">@cus.c_No</div>
+                                <div class="f-2">@cus.c_Name</div>
+                                <div class="f-2">@cus.c_Phone1</div>
+                                <div class="f-2">@cus.c_LicensePlate</div>
+                                <div class="f-5 ta-left">@(cus.c_City+cus.c_Area + cus.c_Address)</div>
+                                <div class="f-2" onclick="event.stopPropagation();">
+                                    @Html.ActionLink(" ", "Edit", new { id = cus.c_Id }, new { @class = "fa-solid fa-pen-to-square", style = "margin-right: 10px;", title = "修改" })
+                                    <form action="@Url.Action("Delete", "Customer", new { id = cus.c_Id })" method="post" style="display: inline;">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="fa-solid fa-trash" onclick="return confirm('確定要刪除這個項目嗎？')" style="border: none; background: none;" title="刪除"></button>
+                                    </form>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- pages -->
+        <div class="pages-wrap">
+            <button class="btn-prev"></button>
+            <button class="btn-next"></button>
+            <span>showing @Model.Count() of @Model.Count()</span>
+        </div>
+    </div>
+</main>

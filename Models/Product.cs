@@ -31,6 +31,7 @@ namespace Electric_Scooter.Models
         public Nullable<int> p_Price { get; set; }
         public Nullable<int> p_s_Id { get; set; }
         public Nullable<System.DateTime> p_CreateDate { get; set; }
+        public string p_No { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetail> OrderDetail { get; set; }

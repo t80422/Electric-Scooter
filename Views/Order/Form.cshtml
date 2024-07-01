@@ -6,181 +6,211 @@
 }
 
 <div class="form-group">
-    @Html.LabelFor(x => x.Orders.o_No, "訂單編號", new { @class = "control-label col-md-2" })
-    <div class="col-md-6">
-        @if (isView)
-        {
-            <p class="form-control-static">@Model.Orders.o_No</p>
-        }
-        else
-        {
-            @Html.EditorFor(x => x.Orders.o_No, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-        }
-    </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(x => x.Orders.o_Date, "日期", new { @class = "control-label col-md-2" })
-    <div class="col-md-6">
-        @if (isView)
-        {
-            <p class="form-control-static">@(Model.Orders.o_Date?.ToString("yyyy-MM-dd"))</p>
-        }
-        else
-        {
-            @Html.DateInputFor(x => x.Orders.o_Date, new { @class = "form-control", required = "required"})
-        }
-    </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(x => x.Orders.o_c_Id, "客戶", new { @class = "control-label col-md-2" })
-    <div class="col-md-1">
-        @if (isView)
-        {
-            <p class="form-control-static">@Model.Orders.Customer.c_Name</p>
-        }
-        else
-        {
-            @Html.TextBoxFor(x => x.Orders.o_c_Id, new { @class = "easyui-combobox", id = "customer", required = "required" })
-        }
-    </div>
-
-    @Html.Label("電話", new { @class = "control-label col-md-1" })
-    <div class="col-md-2">
-        @if (isView)
-        {
-            <p class="form-control-static">@Model.Orders.Customer.c_Phone1</p>
-        }
-        else
-        {
-            <input type="text" class="form-control" id="phone" readonly/>
-        }
-    </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(x => x.Orders.o_State, "狀態", new { @class = "control-label col-md-2" })
-    <div class="col-md-6">
-        @if (isView)
-        {
-            <p class="form-control-static">@Model.Orders.o_State</p>
-        }
-        else
-        {
-            @Html.DropDownListFor(x => x.Orders.o_State, new SelectList(new[]
+    <div class="display-flex flex-1">
+        @Html.LabelFor(x => x.Orders.o_No, "訂單編號", new { @class = "flex-150px text-right" })
+        <div class="flex-1">
+            @if (isView)
             {
-                "完售","預定"
-            }), "請選擇", new { @class = "form-control" })
-        }
+                <p>@Model.Orders.o_No</p>
+            }
+            else
+            {
+                @Html.EditorFor(x => x.Orders.o_No, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            }
+        </div>
     </div>
 </div>
 
 <div class="form-group">
-    <label class="control-label col-md-2">商品清單</label>
-    <div class="col-md-10">
-        @if (!isView)
-        {
-            <button type="button" class="btn btn-primary" id="addProductBtn">新增商品</button>
-        }
-        <table class="table" id="productTable">
-            <thead>
-                <tr>
-                    @if (!isView)
-                    {
-                        <th>刪除</th>
-                    }
-                    <th>車架編號</th>
-                    <th>產品類別</th>
-                    <th>產品名稱</th>
-                    <th>顏色</th>
-                    <th>數量</th>
-                    <th>單價</th>
-                    <th>價格</th>
-                    <th>車牌</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model.OrderDetails.Any())
+    <div class="display-flex flex-1">
+        @Html.LabelFor(x => x.Orders.o_Date, "日期", new { @class = "flex-150px text-right" })
+        <div class="flex-1">
+            @if (isView)
+            {
+                <p>@(Model.Orders.o_Date?.ToString("yyyy-MM-dd"))</p>
+            }
+            else
+            {
+                @Html.DateInputFor(x => x.Orders.o_Date, new { @class = "form-control", required = "required" })
+            }
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="display-flex flex-1">
+        @Html.LabelFor(x => x.Orders.o_c_Id, "客戶", new { @class = "flex-150px text-right" })
+        <div class="flex-1">
+            @if (isView)
+            {
+                <p>@Model.Orders.Customer.c_Name</p>
+            }
+            else
+            {
+                @Html.TextBoxFor(x => x.Orders.o_c_Id, new { @class = "easyui-combobox", id = "customer", required = "required" })
+            }
+        </div>
+    </div>
+    <div class="display-flex flex-1">
+        @Html.Label("電話", new { @class = "flex-150px text-right" })
+        <div class="flex-1">
+            @if (isView)
+            {
+                <p>@Model.Orders.Customer.c_Phone1</p>
+            }
+            else
+            {
+                <input type="text" class="form-control" id="phone" readonly />
+            }
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="display-flex flex-1">
+        @Html.LabelFor(x => x.Points.po_SentDate, "點數起始日期", new { @class = "flex-150px text-right" })
+        <div class="flex-1">
+            @if (isView)
+            {
+                <p>@(Model.Points?.po_SentDate.Value.ToString("yyyy-MM-dd"))</p>
+            }
+            else
+            {
+                @Html.DateInputFor(x => x.Points.po_SentDate, new { @class = "form-control", required = "required" })
+            }
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="display-flex flex-1">
+        @Html.LabelFor(x => x.Orders.o_State, "狀態", new { @class = "flex-150px text-right" })
+        <div class="flex-1">
+            @if (isView)
+            {
+                <p>@Model.Orders.o_State</p>
+            }
+            else
+            {
+                @Html.DropDownListFor(x => x.Orders.o_State, new SelectList(new[]
                 {
-                    foreach (var item in Model.OrderDetails)
-                    {
-                        if (isView)
+                    "完售","預定"
+                }), "請選擇", new { @class = "form-control" })
+            }
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="display-flex flex-1">
+        <label class="flex-150px text-right">商品清單</label>
+        <div class="flex-1">
+            @if (!isView)
+            {
+                <button type="button" class="btn btn-primary" id="addProductBtn">新增商品</button>
+            }
+            <div style="overflow-x:auto;">
+                <table class="table" id="productTable">
+                    <thead>
+                        <tr>
+                            @if (!isView)
+                            {
+                                <th style="min-width:60px">刪除</th>
+                            }
+                            <th>車架編號</th>
+                            <th style="min-width:100px">產品類別</th>
+                            <th style="min-width:100px">產品名稱</th>
+                            <th style="min-width:100px">顏色</th>
+                            <th style="min-width:100px">數量</th>
+                            <th style="min-width:100px">單價</th>
+                            <th style="min-width:100px">價格</th>
+                            <th style="min-width:100px">車牌</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.OrderDetails.Any())
                         {
-                            <tr>
-                                <td><p class="form-control-static">@item.Product.p_CarFrameNo</p></td>
-                                <td><p class="form-control-static">@item.Product.p_Type</p></td>
-                                <td><p class="form-control-static">@item.Product.p_Name</p></td>
-                                <td><p class="form-control-static">@item.Product.p_Color</p></td>
-                                <td><p class="form-control-static">@item.od_Quantity</p></td>
-                                <td><p class="form-control-static">@item.Product.p_Price</p></td>
-                                <td><p class="form-control-static">@(item.od_Quantity * item.Product.p_Price)</p></td>
-                                <td><p class="form-control-static">@item.od_LicensePlate</p></td>
-                            </tr>
+                            foreach (var item in Model.OrderDetails)
+                            {
+                                if (isView)
+                                {
+                                    <tr>
+                                        <td><p class="form-control-static">@item.Product.p_CarFrameNo</p></td>
+                                        <td><p class="form-control-static">@item.Product.p_Type</p></td>
+                                        <td><p class="form-control-static">@item.Product.p_Name</p></td>
+                                        <td><p class="form-control-static">@item.Product.p_Color</p></td>
+                                        <td><p class="form-control-static">@item.od_Quantity</p></td>
+                                        <td><p class="form-control-static">@item.Product.p_Price</p></td>
+                                        <td><p class="form-control-static">@(item.od_Quantity * item.Product.p_Price)</p></td>
+                                        <td><p class="form-control-static">@item.od_LicensePlate</p></td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td><button type="button" class="btn btn-danger btn-sm removeProductBtn">X</button></td>
+                                        <td><input type="text" class="easyui-combobox" id="carFrameNo_@itemIndex" value="@item.Product.p_CarFrameNo"></td>
+                                        <td><input type="text" class="form-control" id="productType_@itemIndex" value="@item.Product.p_Type" readonly></td>
+                                        <td><input type="text" class="easyui-combobox" id="productName_@itemIndex" value="@item.Product.p_Name"></td>
+                                        <td><input type="text" class="form-control" id="productColor_@itemIndex" value="@item.Product.p_Color" readonly></td>
+                                        <td><input type="number" class="form-control" id="productQuantity_@itemIndex" name="OrderDetails[@itemIndex].od_Quantity" value="@item.od_Quantity" required></td>
+                                        <td><input type="number" class="form-control" id="productPrice_@itemIndex" value="@item.Product.p_Price" readonly></td>
+                                        <td><input type="number" class="form-control" id="productTotalPrice_@itemIndex" value="" readonly></td>
+                                        <td><input type="text" class="form-control" id="licensePlate_@itemIndex" name="OrderDetails[@itemIndex].od_LicensePlate" value="@item.od_LicensePlate"></td>
+                                        <td><input type="hidden" id="productId_@itemIndex" name="OrderDetails[@itemIndex].od_p_Id" value="@item.od_p_Id"></td>
+                                    </tr>
+                                }
+                                itemIndex++;
+                            }
                         }
                         else
                         {
                             <tr>
                                 <td><button type="button" class="btn btn-danger btn-sm removeProductBtn">X</button></td>
-                                <td><input type="text" class="easyui-combobox" id="carFrameNo_@itemIndex" value="@item.Product.p_CarFrameNo"></td>
-                                <td><input type="text" class="form-control" id="productType_@itemIndex" value="@item.Product.p_Type" readonly></td>
-                                <td><input type="text" class="easyui-combobox" id="productName_@itemIndex" value="@item.Product.p_Name"></td>
-                                <td><input type="text" class="form-control" id="productColor_@itemIndex" value="@item.Product.p_Color" readonly></td>
-                                <td><input type="number" class="form-control" id="productQuantity_@itemIndex" name="OrderDetails[@itemIndex].od_Quantity" value="@item.od_Quantity" required></td>
-                                <td><input type="number" class="form-control" id="productPrice_@itemIndex" value="@item.Product.p_Price" readonly></td>
-                                <td><input type="number" class="form-control" id="productTotalPrice_@itemIndex" value="" readonly></td>
-                                <td><input type="text" class="form-control" id="licensePlate_@itemIndex" name="OrderDetails[@itemIndex].od_LicensePlate" value="@item.od_LicensePlate"></td>
-                                <td><input type="hidden" id="productId_@itemIndex" name="OrderDetails[@itemIndex].od_p_Id" value="@item.od_p_Id"></td>
+                                <td><input type="text" class="easyui-combobox" id="carFrameNo_0"></td>
+                                <td><input type="text" class="form-control" id="productType_0" readonly></td>
+                                <td><input type="text" class="easyui-combobox" id="productName_0"></td>
+                                <td><input type="text" class="form-control" id="productColor_0" readonly></td>
+                                <td><input type="number" class="form-control" id="productQuantity_0" name="OrderDetails[0].od_Quantity" required></td>
+                                <td><input type="number" class="form-control" id="productPrice_0" readonly></td>
+                                <td><input type="number" class="form-control" id="productTotalPrice_0" readonly></td>
+                                <td><input type="text" class="form-control" id="licensePlate_0" name="OrderDetails[0].od_LicensePlate"></td>
+                                <td><input type="hidden" id="productId_0" name="OrderDetails[0].od_p_Id"></td>
                             </tr>
                         }
-                        itemIndex++;
-                    }
-                }
-                else
-                {
-                    <tr>
-                        <td><button type="button" class="btn btn-danger btn-sm removeProductBtn">X</button></td>
-                        <td><input type="text" class="easyui-combobox" id="carFrameNo_0"></td>
-                        <td><input type="text" class="form-control" id="productType_0" readonly></td>
-                        <td><input type="text" class="easyui-combobox" id="productName_0"></td>
-                        <td><input type="text" class="form-control" id="productColor_0" readonly></td>
-                        <td><input type="number" class="form-control" id="productQuantity_0" name="OrderDetails[0].od_Quantity" required></td>
-                        <td><input type="number" class="form-control" id="productPrice_0" readonly></td>
-                        <td><input type="number" class="form-control" id="productTotalPrice_0" readonly></td>
-                        <td><input type="text" class="form-control" id="licensePlate_0" name="OrderDetails[0].od_LicensePlate"></td>
-                        <td><input type="hidden" id="productId_0" name="OrderDetails[0].od_p_Id"></td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(x => x.Orders.o_TotalPrice, "總價格", new { @class = "control-label col-md-2" })
-    <div class="col-md-6">
-        @if (isView)
-        {
-            <p class="form-control-static">@Model.Orders.o_TotalPrice</p>
-        }
-        else
-        {
-            @Html.TextBoxFor(x => x.Orders.o_TotalPrice, new { @class = "form-control", @readonly = "readonly" })
-        }
+    <div class="display-flex flex-1">
+        @Html.LabelFor(x => x.Orders.o_TotalPrice, "總價格", new { @class = "flex-150px text-right" })
+        <div class="flex-1">
+            @if (isView)
+            {
+                <p>@Model.Orders.o_TotalPrice</p>
+            }
+            else
+            {
+                @Html.TextBoxFor(x => x.Orders.o_TotalPrice, new { @class = "form-control", @readonly = "readonly" })
+            }
+        </div>
     </div>
 </div>
 
+<legend class="form-head-title">付款情況</legend>
 <fieldset class="form-group">
-    <legend>付款情況</legend>
-
-    <div class="form-group">
-        @Html.LabelFor(x => x.Orders.o_IsSettled, "結清", new { @class = "control-label col-md-2" })
-        <div class="col-md-6">
+    <div class="display-flex flex-1">
+        @Html.LabelFor(x => x.Orders.o_IsSettled, "結清", new { @class = "flex-150px text-right" })
+        <div class="flex-1">
             @if (isView)
             {
                 if (Model.Orders.o_IsSettled.HasValue)
                 {
-                    <p class="form-control-static">@(Model.Orders.o_IsSettled.Value?"是":"否")</p>
+                    <p>@(Model.Orders.o_IsSettled.Value?"是":"否")</p>
                 }
             }
             else
@@ -194,15 +224,14 @@
             }
         </div>
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(x => x.Orders.o_IsCollectPayment, "收款", new { @class = "control-label col-md-2" })
-        <div class="col-md-6">
+    <div class="display-flex flex-1">
+        @Html.LabelFor(x => x.Orders.o_IsCollectPayment, "收款", new { @class = "flex-150px text-right" })
+        <div class="flex-1">
             @if (isView)
             {
                 if (Model.Orders.o_IsCollectPayment.HasValue)
                 {
-                    <p class="form-control-static">@(Model.Orders.o_IsCollectPayment.Value?"是":"否")</p>
+                    <p>@(Model.Orders.o_IsCollectPayment.Value?"是":"否")</p>
                 }
             }
             else
@@ -216,15 +245,14 @@
             }
         </div>
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(x => x.Orders.o_IsInstallment, "分期", new { @class = "control-label col-md-2" })
-        <div class="col-md-6">
+    <div class="display-flex flex-1">
+        @Html.LabelFor(x => x.Orders.o_IsInstallment, "分期", new { @class = "flex-150px text-right" })
+        <div class="flex-1">
             @if (isView)
             {
                 if (Model.Orders.o_IsInstallment.HasValue)
                 {
-                    <p class="form-control-static">@(Model.Orders.o_IsInstallment.Value?"是":"否")</p>
+                    <p>@(Model.Orders.o_IsInstallment.Value?"是":"否")</p>
                 }
             }
             else
@@ -240,19 +268,17 @@
     </div>
 </fieldset>
 
-<div class="form-group">
-    <div class="col-md-offset-2 col-md-10">
-        @if (isView)
-        {
-            @Html.ActionLink("編輯", "Edit", new { id = Model.Orders.o_Id }, new { @class = "btn btn-primary" })
-        }
-        else
-        {
-            <input type="submit" value="儲存" class="btn btn-primary" />
-        }
+<div class="form-bottom-btn">
+    @if (isView)
+    {
+        @Html.ActionLink("編輯", "Edit", new { id = Model.Orders.o_Id }, new { @class = "btn btn-primary" })
+    }
+    else
+    {
+        <input type="submit" value="儲存" class="btn btn-primary" />
+    }
 
-        @Html.ActionLink("返回列表", "Index", "Purchase", new { @class = "btn btn-secondary" })
-    </div>
+    @Html.ActionLink("返回列表", "Index", "Purchase", new { @class = "btn btn-secondary" })
 </div>
 
 <script>
